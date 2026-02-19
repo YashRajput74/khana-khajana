@@ -72,7 +72,7 @@ export const mockRecipes = {
 
     'rec_005': {
         title: "Sunday Pancakes",
-        image: "https://source.unsplash.com/600x400/?pancakes",
+        image: "",
         category: "Breakfast",
         tags: ["Sweet", "Weekend", "Easy"],
         cookingTime: 20,
@@ -126,7 +126,7 @@ export const mockRecipes = {
 
     'rec_008': {
         title: "Avocado & Egg Toast",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBSgXy-Obr7s4R9GvFwy6fc9flr9iuJcBhIyBxI8fw2SZd3SAZNNAT1XU3tEoJe2S8EdUAJBp0vIzV_J3x83QqSbP_uetQemUZep7qNFGduzgiJVmbhF1TESBk9lEscxXeIjZVwOYxWplczaAbA4HN3I3TwAUhMGBLoHhgp8CvJ8HdLhPVzn1jOBhj95wFsoxD5Q6pXEVLItp49k25LpZr2tj5BJLCpXFV3etQHtqalVXacWeyQHlSDBn_z6Zgr69U-T9HLBoboxmg",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBSgXy-Obr7s4R9GvFwy6fc9flr9iuJcBhIyBxI8fw2SZd3SAZNNAT1XU3tEoJe2S8EdUAJBp0vIzV_J3x83QqSbP_uetQemUZep7qNFGduzgiJVmbhF1TESBk9lEscxXeIjZVwOYxWplczaAbA4HN3I3TwAUhMGBLoHgp8CvJ8HdLhPVzn1jOBhj95wFsoxD5Q6pXEVLItp49k25LpZr2tj5BJLCpXFV3etQHtqalVXacWeyQHlSDBn_z6Zgr69U-T9HLBoboxmg",
         category: "Breakfast",
         tags: ["Healthy", "Quick", "Protein"],
         cookingTime: 10,
@@ -265,5 +265,5 @@ export const mockPlanner = [
 export const mockUser = {
     id: "user_001",
     name: "Demo User",
-    avatar: "https://...",
+    avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuADBoucU7wCKnOfXrC3UYZHGLEJo-waF7NaNvPO-EPu1tq1zGzO6uT7NDzW8P1HWLoFvDEQW35vAZw0DoEnJekloQQW0iPf2GQ-LVXApe_pfvZbPPcgViKJu6EqPe9QcC6Q3Ea5nxUoQDmiy4tcZVkGuOVPeJghJl-xnFjW7cLO3QpuwCDYTgBypJ9EpWIn9Nz3bxJmmCHwAb7wrbJWWdq75QGzkxg1WNKZK704emNTHDNYhI3LzTcXBuWwvLZ-dyvOwozYdo33gw",
 };
