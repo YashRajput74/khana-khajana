@@ -1,0 +1,78 @@
+/* Wrapper */
+.mp-dock-wrapper {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    max-width: 95vw;
+}
+
+/* Dock Container */
+.mp-dock {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 8px;
+    border-radius: 999px;
+
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.9);
+
+    border: 1px solid #e7e5e4;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.mp-dock::-webkit-scrollbar {
+    display: none;
+}
+
+/* Items */
+.mp-dock-item {
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+
+    text-decoration: none;
+    color: #44403c;
+
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+
+    transition: all 0.25s ease;
+}
+
+/* Hover */
+.mp-dock-item:hover {
+    background: #f3f4f6;
+}
+
+/* Active Route (NavLink auto adds .active) */
+.mp-dock-item.active {
+    background: #4beb2b;
+    color: #000;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(75, 235, 43, 0.4);
+}
+
+/* Divider */
+.mp-dock-divider {
+    width: 1px;
+    height: 24px;
+    background: #d6d3d1;
+    margin: 0 4px;
+}
+
+/* Icon + Text */
+.mp-dock-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}

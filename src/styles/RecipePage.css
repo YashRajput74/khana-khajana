@@ -1,0 +1,206 @@
+.rv-page {
+    font-family: "Work Sans", sans-serif;
+    background: #f6f8f6;
+    min-height: 100vh;
+    color: #121811;
+}
+
+/* HEADER */
+.rv-header {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e5e9e4;
+    z-index: 100;
+}
+
+.rv-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rv-logo {
+    color: #4deb2d;
+    font-size: 28px;
+}
+
+.rv-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rv-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #f6f8f6;
+    cursor: pointer;
+}
+
+.rv-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.rv-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* MAIN */
+.rv-main {
+    max-width: 800px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.rv-main h1 {
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.rv-subtitle {
+    color: #688961;
+    margin-bottom: 30px;
+}
+
+/* SEARCH */
+.rv-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #e5e9e4;
+    padding: 10px 16px;
+    border-radius: 16px;
+    background: white;
+    margin-bottom: 30px;
+}
+
+.rv-search input {
+    flex: 1;
+    border: none;
+    outline: none;
+}
+
+/* FILTER */
+.rv-filter {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.rv-filter button {
+    padding: 8px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: #f1f4f0;
+}
+
+.rv-filter-active {
+    background: white !important;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* CARDS */
+.rv-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e5e9e4;
+    margin-bottom: 16px;
+    transition: 0.2s ease;
+}
+
+.rv-card:hover {
+    border-color: #4deb2d;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.rv-card-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.rv-card-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.rv-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rv-card-text h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.rv-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #688961;
+    margin-top: 6px;
+}
+
+.rv-dot {
+    width: 4px;
+    height: 4px;
+    background: #ccc;
+    border-radius: 50%;
+}
+
+.rv-tag {
+    color: #4deb2d;
+    font-weight: 500;
+}
+
+.rv-card-actions button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* FAB */
+.rv-fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #4deb2d;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px rgba(77, 235, 45, 0.3);
+    transition: 0.2s;
+}
+
+.rv-fab:hover {
+    transform: scale(1.08);
+}

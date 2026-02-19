@@ -1,0 +1,238 @@
+.er-page {
+    font-family: "Work Sans", sans-serif;
+    background: #fdfbf7;
+    min-height: 100vh;
+}
+
+/* HEADER */
+.er-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 30px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.er-header h1 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.er-cancel {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: none;
+    background: none;
+    color: #688961;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.er-save {
+    background: #4deb2d;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* MAIN */
+.er-main {
+    max-width: 700px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.er-section {
+    margin-bottom: 40px;
+}
+
+.er-section label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #688961;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.er-section input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #e5e7eb;
+    font-size: 28px;
+    font-weight: 700;
+    padding: 10px 0;
+    background: transparent;
+}
+
+.er-section input:focus {
+    outline: none;
+    border-color: #4deb2d;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #f0f0f0;
+    margin-bottom: 40px;
+}
+
+/* PHOTO */
+.er-photo-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.er-photo {
+    position: relative;
+    width: 220px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.er-photo img {
+    width: 100%;
+    display: block;
+}
+
+.er-photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.er-photo:hover .er-photo-overlay {
+    opacity: 1;
+}
+
+.er-photo-overlay button {
+    background: white;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.er-photo-info h3 {
+    margin-bottom: 6px;
+}
+
+.er-photo-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.er-btn-outline {
+    border: 1px solid #ddd;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+}
+
+.er-btn-danger {
+    border: none;
+    background: transparent;
+    color: #ef4444;
+    cursor: pointer;
+}
+
+/* TAGS */
+.er-tags-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.er-add-tag {
+    border: none;
+    background: none;
+    color: #4deb2d;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.er-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.er-tag {
+    background: rgba(77, 235, 45, 0.1);
+    padding: 6px 12px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.er-tag button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.er-tag-add {
+    border: 1px dashed #ccc;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: none;
+    cursor: pointer;
+}
+
+/* TEXTAREA */
+.er-textarea-wrapper {
+    position: relative;
+}
+
+.er-textarea-wrapper textarea {
+    width: 100%;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.er-textarea-wrapper textarea:focus {
+    outline: none;
+    border-color: #4deb2d;
+}
+
+.er-markdown {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    font-size: 12px;
+    color: #688961;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
+/* DELETE */
+.er-delete {
+    display: flex;
+    justify-content: center;
+}
+
+.er-delete button {
+    border: none;
+    background: none;
+    color: #ef4444;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}

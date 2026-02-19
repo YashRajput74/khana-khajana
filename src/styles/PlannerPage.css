@@ -1,0 +1,184 @@
+.pp-page {
+    font-family: "Epilogue", sans-serif;
+    background: #fdfbf7;
+    min-height: 100vh;
+    color: #292524;
+}
+
+/* HEADER */
+.pp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 40px;
+}
+
+.pp-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.pp-logo-icon {
+    width: 32px;
+    height: 32px;
+    background: #4beb2b;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pp-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.pp-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* MAIN */
+.pp-main {
+    max-width: 700px;
+    margin: auto;
+    padding: 20px 20px 100px;
+}
+
+/* TOP */
+.pp-top {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.pp-top h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.pp-week-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    background: white;
+    border: 1px solid #e7e5e4;
+}
+
+.pp-week-nav button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* DAY CARDS */
+.pp-day-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e7e5e4;
+    margin-bottom: 12px;
+    transition: 0.2s;
+}
+
+.pp-day-card:hover {
+    border-color: #4beb2b;
+}
+
+.pp-day-info {
+    width: 100px;
+    border-right: 1px solid #f0f0f0;
+    padding-right: 16px;
+}
+
+.pp-day-name {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #78716c;
+    font-weight: 600;
+}
+
+.pp-day-date {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* MEAL */
+.pp-meal {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pp-meal-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pp-meal-left img {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.pp-meal-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: #ffedd5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pp-meal-left h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.pp-meal-left p {
+    font-size: 12px;
+    color: #78716c;
+    margin-top: 4px;
+}
+
+.pp-edit-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #a8a29e;
+}
+
+.pp-edit-btn:hover {
+    color: #4beb2b;
+}
+
+/* EMPTY STATE */
+.pp-empty {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px dashed #e7e5e4;
+    border-radius: 8px;
+    padding: 10px;
+    color: #a8a29e;
+    cursor: pointer;
+}
+
+.pp-empty:hover {
+    border-color: #4beb2b;
+    color: #4beb2b;
+}
