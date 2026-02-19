@@ -1,27 +1,29 @@
 import "../styles/HomePage.css";
 import { APP_NAME } from "../config/appconfig";
 import BottomNav from "../components/BottomNav";
-import { mockRecipes, mockPlanner, mockUser } from "../data/mockData";
+import { useRecipes } from "../context/RecipesContext";
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-const filledDays = mockPlanner.reduce((acc, item, index) => {
-    if (item.recipeId) {
-        const recipe = mockRecipes[item.recipeId];
-        acc[index] = {
-            image: recipe?.image || null,
-            label: recipe?.title || "Unknown Recipe",
-        };
-    }
-    return acc;
-}, {});
-
-const recentlyCooked = Object.values(mockRecipes)
-    .filter(recipe => recipe.lastCookedAt)
-    .sort((a, b) => new Date(b.lastCookedAt) - new Date(a.lastCookedAt))
-    .slice(0, 3);
-
 export default function HomePage() {
+    const {
+        planner,
+        recipes,
+        recentlyCooked,
+        totalSaved
+    } = useRecipes();
+
+    const filledDays = planner.reduce((acc, item, index) => {
+        if (item.recipeId && recipes[item.recipeId]) {
+            const recipe = recipes[item.recipeId];
+            acc[index] = {
+                image: recipe.image || null,
+                label: recipe.title
+            };
+        }
+        return acc;
+    }, {});
+
     return (
         <div className="mp-page">
 
@@ -36,7 +38,7 @@ export default function HomePage() {
                 <div className="mp-header-right">
                     <div className="mp-saved-box">
                         <span className="material-symbols-outlined">inventory_2</span>
-                        You've saved 14 dishes so far.
+                        You've saved {totalSaved} dishes so far.
                     </div>
 
                     <button className="mp-profile-btn">
@@ -96,8 +98,8 @@ export default function HomePage() {
                             <button>View All</button>
                         </div>
 
-                        {recentlyCooked.map((item, index) => (
-                            <div key={index} className="mp-recent-card">
+                        {recentlyCooked.slice(0, 3).map((item) => (
+                            <div key={item.title} className="mp-recent-card">
                                 <div>
                                     <h4>{item.title}</h4>
                                     <p>Last cooked: {new Date(item.lastCookedAt).toLocaleDateString()}</p>

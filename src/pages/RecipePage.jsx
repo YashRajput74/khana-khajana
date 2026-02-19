@@ -1,7 +1,8 @@
 import BottomNav from "../components/BottomNav";
 import { APP_NAME } from "../config/appconfig";
 import "../styles/RecipePage.css";
-import { mockRecipes, mockUser } from "../data/mockData";
+import { useRecipes } from "../context/RecipesContext";
+import { useNavigate } from "react-router-dom";
 
 function getTimeAgo(dateString) {
     const diffMs = new Date() - new Date(dateString);
@@ -14,7 +15,16 @@ function getTimeAgo(dateString) {
 }
 
 export default function RecipesPage() {
-    const recipes = Object.values(mockRecipes).sort(
+    const {
+        recipes,
+        recipesArray,
+        toggleFavorite,
+        user
+    } = useRecipes();
+
+    const navigate = useNavigate();
+
+    const sortedRecipes = [...recipesArray].sort(
         (a, b) => new Date(b.addedAt) - new Date(a.addedAt)
     );
 
@@ -38,7 +48,7 @@ export default function RecipesPage() {
                         <span className="material-symbols-outlined">settings</span>
                     </button>
                     <div className="rv-avatar">
-                        <img src={mockUser.avatar} alt={mockUser.name} />
+                        <img src={user.avatar} alt={user.name} />
                     </div>
                 </div>
             </header>
@@ -65,43 +75,54 @@ export default function RecipesPage() {
 
                 {/* CARDS */}
                 <div className="rv-cards">
-                    {recipes.map((item, index) => (
-                        <article key={index} className="rv-card">
-                            <div className="rv-card-left">
-                                <div className="rv-card-img">
-                                    {item.image ? (
-                                        <img src={item.image} alt={item.title} />
-                                    ) : (
-                                        <span className="material-symbols-outlined text-gray-400 dark:text-gray-600 text-2xl">
-                                            restaurant
-                                        </span>
-                                    )}
-                                </div>
-                                <div className="rv-card-text">
-                                    <h3>{item.title}</h3>
-                                    <div className="rv-card-meta">
-                                        <span className="material-symbols-outlined">history</span>
-                                        <span>{getTimeAgo(item.lastCookedAt)}</span>
-                                        <span className="rv-dot"></span>
-                                        <span className="rv-tag">{item.category}</span>
+                    {sortedRecipes.map((item) => {
+                        const recipeId = Object.keys(recipes).find(
+                            key => recipes[key] === item
+                        );
+
+                        return (
+                            <article key={recipeId} className="rv-card">
+
+                                <div
+                                    className="rv-card-left"
+                                    onClick={() => navigate(`/recipes/${recipeId}`)}
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    <div className="rv-card-img">
+                                        {item.image ? (
+                                            <img src={item.image} alt={item.title} />
+                                        ) : (
+                                            <span className="material-symbols-outlined text-gray-400 dark:text-gray-600 text-2xl">
+                                                restaurant
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="rv-card-text">
+                                        <h3>{item.title}</h3>
+                                        <div className="rv-card-meta">
+                                            <span className="material-symbols-outlined">history</span>
+                                            <span>{getTimeAgo(item.lastCookedAt)}</span>
+                                            <span className="rv-dot"></span>
+                                            <span className="rv-tag">{item.category}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="rv-card-actions">
-                                <button>
-                                    <span className="material-symbols-outlined">
-                                        star
-                                    </span>
-                                </button>
-                                <button>
-                                    <span className="material-symbols-outlined">
-                                        more_vert
-                                    </span>
-                                </button>
-                            </div>
-                        </article>
-                    ))}
+                                <div className="rv-card-actions">
+                                    <button onClick={() => toggleFavorite(recipeId)}>
+                                        <span className="material-symbols-outlined">
+                                            {item.isFavorite ? "star" : "star_outline"}
+                                        </span>
+                                    </button>
+                                    <button>
+                                        <span className="material-symbols-outlined">
+                                            more_vert
+                                        </span>
+                                    </button>
+                                </div>
+                            </article>
+                        )
+                    })}
                 </div>
             </main>
 

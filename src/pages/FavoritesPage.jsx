@@ -1,7 +1,8 @@
 import "../styles/FavoritesPage.css";
 import BottomNav from "../components/BottomNav";
 import { APP_NAME } from "../config/appconfig";
-import { mockRecipes, mockUser } from "../data/mockData";
+import { useRecipes } from "../context/RecipesContext";
+import { useNavigate } from "react-router-dom";
 
 function formatLastCooked(lastCookedAt) {
     if (!lastCookedAt) return "Never cooked";
@@ -18,11 +19,14 @@ function formatLastCooked(lastCookedAt) {
     return `Last cooked ${Math.floor(diffDays / 30)} month${Math.floor(diffDays / 30) > 1 ? "s" : ""} ago`;
 }
 
-const favoritesData = Object.values(mockRecipes)
-    .filter(recipe => recipe.isFavorite)
-    .sort((a, b) => new Date(b.lastCookedAt) - new Date(a.lastCookedAt));
-
 export default function FavoritesPage() {
+    const { favorites, recipes, toggleFavorite, user } = useRecipes();
+    const navigate = useNavigate();
+
+    const sortedFavorites = [...favorites].sort(
+        (a, b) => new Date(b.lastCookedAt) - new Date(a.lastCookedAt)
+    );
+
     return (
         <div className="fp-page">
 
@@ -40,7 +44,7 @@ export default function FavoritesPage() {
 
                     <div
                         className="fp-avatar"
-                        style={{ backgroundImage: `url(${mockUser.avatar})` }}
+                        style={{ backgroundImage: `url(${user.avatar})` }}
                     ></div>
                 </div>
             </header>
@@ -50,38 +54,52 @@ export default function FavoritesPage() {
                 <p className="fp-subtitle">Your most loved and reliable dishes.</p>
 
                 <div className="fp-list">
-                    {favoritesData.map((recipe, index) => (
-                        <div key={index} className="fp-card">
+                    {sortedFavorites.map((recipe) => {
+                        const recipeId = Object.keys(recipes).find(
+                            key => recipes[key] === recipe
+                        );
 
-                            <div className="fp-card-text">
-                                <h3>{recipe.title}</h3>
-                                <div className="fp-meta">
-                                    <span className="material-symbols-outlined">schedule</span>
-                                    <span>{formatLastCooked(recipe.lastCookedAt)}</span>
-                                </div>
-                            </div>
+                        return (
+                            <div key={recipeId} className="fp-card">
 
-                            <div className="fp-card-right">
-                                <button className="fp-star">
-                                    <span className="material-symbols-outlined">star</span>
-                                </button>
 
-                                {recipe.image ? (
-                                    <div
-                                        className="fp-image"
-                                        style={{ backgroundImage: `url(${recipe.image})` }}
-                                    ></div>
-                                ) : (
-                                    <div className="fp-image fp-placeholder">
-                                        <span className="material-symbols-outlined text-gray-400 dark:text-gray-600 text-2xl">
-                                            restaurant
-                                        </span>
+                                <div
+                                    className="fp-card-text"
+                                    onClick={() => navigate(`/recipes/${recipeId}`)}
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    <h3>{recipe.title}</h3>
+                                    <div className="fp-meta">
+                                        <span className="material-symbols-outlined">schedule</span>
+                                        <span>{formatLastCooked(recipe.lastCookedAt)}</span>
                                     </div>
-                                )}
-                            </div>
+                                </div>
 
-                        </div>
-                    ))}
+                                <div className="fp-card-right">
+                                    <button
+                                        className="fp-star"
+                                        onClick={() => toggleFavorite(recipeId)}
+                                    >
+                                        <span className="material-symbols-outlined">star</span>
+                                    </button>
+
+                                    {recipe.image ? (
+                                        <div
+                                            className="fp-image"
+                                            style={{ backgroundImage: `url(${recipe.image})` }}
+                                        ></div>
+                                    ) : (
+                                        <div className="fp-image fp-placeholder">
+                                            <span className="material-symbols-outlined text-gray-400 dark:text-gray-600 text-2xl">
+                                                restaurant
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+
+                            </div>
+                        )
+                    })}
                 </div>
             </main>
 

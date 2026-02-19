@@ -1,32 +1,38 @@
 import "../styles/PlannerPage.css";
 import BottomNav from "../components/BottomNav";
 import { APP_NAME } from "../config/appconfig";
-import { mockRecipes, mockPlanner, mockUser } from "../data/mockData";
+import { useRecipes } from "../context/RecipesContext";
+import { useNavigate } from "react-router-dom";
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-// Prepare the planner data for display
-const plannerData = mockPlanner.map((item, index) => {
-    const recipe = item.recipeId ? mockRecipes[item.recipeId] : null;
-
-    return {
-        day: daysOfWeek[index],
-        date: new Date(item.date).toLocaleDateString("en-US", {
-            day: "2-digit",
-            month: "short",
-        }),
-        meal: recipe
-            ? {
-                title: recipe.title,
-                info: recipe.cookingTime ? `${recipe.cookingTime} min • ${recipe.tags[0]}` : "",
-                image: recipe.image || null,
-                icon: "restaurant",
-            }
-            : null,
-    };
-});
-
 export default function PlannerPage() {
+    const { planner, recipes, user } = useRecipes();
+    const navigate = useNavigate();
+
+    const plannerData = planner.map((item, index) => {
+        const recipe = item.recipeId ? recipes[item.recipeId] : null;
+
+        return {
+            day: daysOfWeek[index],
+            date: new Date(item.date).toLocaleDateString("en-US", {
+                day: "2-digit",
+                month: "short",
+            }),
+            meal: recipe
+                ? {
+                    id: item.recipeId,
+                    title: recipe.title,
+                    info: recipe.cookingTime
+                        ? `${recipe.cookingTime} min • ${recipe.tags?.[0] || ""}`
+                        : "",
+                    image: recipe.image || null,
+                    icon: "restaurant",
+                }
+                : null,
+        };
+    });
+
     return (
         <div className="pp-page">
             {/* HEADER */}
@@ -39,7 +45,7 @@ export default function PlannerPage() {
                 </div>
 
                 <div className="pp-avatar">
-                    <img src={mockUser.avatar} alt={mockUser.name} />
+                    <img src={user.avatar} alt={user.name} />
                 </div>
             </header>
 
@@ -69,7 +75,11 @@ export default function PlannerPage() {
 
                             {item.meal ? (
                                 <div className="pp-meal">
-                                    <div className="pp-meal-left">
+                                    <div
+                                        className="pp-meal-left"
+                                        onClick={() => navigate(`/recipes/${item.meal.id}`)}
+                                        style={{ cursor: "pointer" }}
+                                    >
                                         {item.meal.image ? (
                                             <img src={item.meal.image} alt={item.meal.title} />
                                         ) : (
@@ -90,7 +100,11 @@ export default function PlannerPage() {
                                     </button>
                                 </div>
                             ) : (
-                                <div className="pp-empty">
+                                <div
+                                    className="pp-empty"
+                                    onClick={() => navigate("/recipes")}
+                                    style={{ cursor: "pointer" }}
+                                >
                                     <span className="material-symbols-outlined">add</span>
                                     <span>Add dish</span>
                                 </div>

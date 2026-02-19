@@ -74,7 +74,8 @@
 .rd-image-wrapper {
     border-radius: 24px;
     overflow: hidden;
-    margin-bottom: 30px;
+    width: 300px;
+    margin: 30px auto;
 }
 
 .rd-image-wrapper img {
