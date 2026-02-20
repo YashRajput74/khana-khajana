@@ -8,6 +8,28 @@ export function RecipesProvider({ children }) {
     const [planner, setPlanner] = useState(mockPlanner);
     const [user, setUser] = useState(mockUser);
 
+    const addRecipe = (title) => {
+        const newId = `rec_${Date.now()}`;
+
+        const newRecipe = {
+            title,
+            image: null,
+            category: "Uncategorized",
+            tags: [],
+            cookingTime: null,
+            addedAt: new Date().toISOString(),
+            lastCookedAt: null,
+            isFavorite: false,
+            steps: []
+        };
+
+        setRecipes(prev => ({
+            ...prev,
+            [newId]: newRecipe
+        }));
+
+        return newId;
+    };
     const recipesArray = useMemo(() => {
         return Object.entries(recipes).map(([id, recipe]) => ({
             id,
@@ -69,6 +91,16 @@ export function RecipesProvider({ children }) {
         );
     };
 
+    const updateRecipe = (id, updates) => {
+        setRecipes(prev => ({
+            ...prev,
+            [id]: {
+                ...prev[id],
+                ...updates
+            }
+        }));
+    };
+
     return (
         <RecipesContext.Provider
             value={{
@@ -82,7 +114,9 @@ export function RecipesProvider({ children }) {
                 toggleFavorite,
                 markAsCooked,
                 deleteRecipe,
-                addToPlanner
+                addToPlanner,
+                addRecipe,
+                updateRecipe
             }}
         >
             {children}

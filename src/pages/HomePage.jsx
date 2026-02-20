@@ -3,6 +3,9 @@ import { APP_NAME } from "../config/appconfig";
 import BottomNav from "../components/BottomNav";
 import { useRecipes } from "../context/RecipesContext";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import RecipeSavedModal from "../components/RecipeSavedModal";
+import RecipeDetailsModal from "../components/RecipeDetailsModal";
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -12,9 +15,14 @@ export default function HomePage() {
         planner,
         recipes,
         recentlyCooked,
-        totalSaved
+        totalSaved,
+        addRecipe
     } = useRecipes();
     const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [newRecipeTitle, setNewRecipeTitle] = useState("");
+    const [createdRecipeId, setCreatedRecipeId] = useState(null);
+    const [detailsModalId, setDetailsModalId] = useState(null);
 
     const filledDays = planner.reduce((acc, item, index) => {
         if (item.recipeId && recipes[item.recipeId]) {
@@ -91,8 +99,26 @@ export default function HomePage() {
                     <h3>Quick Add Recipe</h3>
                     <div className="mp-quick-box">
                         <span className="material-symbols-outlined">add_circle</span>
-                        <input placeholder="Paste a URL or type a recipe name..." />
-                        <button>Save</button>
+                        <input
+                            placeholder="Paste a URL or type a recipe name..."
+                            value={newRecipeTitle}
+                            onChange={(e) => setNewRecipeTitle(e.target.value)}
+                        />
+                        <button
+                            onClick={() => {
+                                if (!newRecipeTitle.trim()) return;
+
+                                const newId = addRecipe(newRecipeTitle);
+
+                                if (newId) {
+                                    setCreatedRecipeId(newId);
+                                    setShowModal(true);
+                                    setNewRecipeTitle(""); 
+                                }
+                            }}
+                        >
+                            Save
+                        </button>
                     </div>
                 </section>
 
@@ -160,6 +186,26 @@ export default function HomePage() {
                 </div>
             </main>
 
+            {showModal && (
+                <RecipeSavedModal
+                    recipeTitle={newRecipeTitle}
+                    onAddDetails={() => {
+                        setShowModal(false);
+                        setDetailsModalId(createdRecipeId);
+                    }}
+                    onClose={() => {
+                        setShowModal(false);
+                        setNewRecipeTitle("");
+                    }}
+                />
+            )}
+
+            {detailsModalId && (
+                <RecipeDetailsModal
+                    recipeId={detailsModalId}
+                    onClose={() => setDetailsModalId(null)}
+                />
+            )}
             <BottomNav />
 
         </div>

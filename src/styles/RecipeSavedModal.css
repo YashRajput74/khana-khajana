@@ -1,0 +1,98 @@
+.rsm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.rsm-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 25, 23, 0.3);
+    backdrop-filter: blur(6px);
+}
+
+.rsm-modal {
+    position: relative;
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    animation: rsmFade 0.25s ease;
+}
+
+.rsm-icon {
+    width: 64px;
+    height: 64px;
+    background: #e8fbe3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px auto;
+    color: #4beb2b;
+    font-size: 28px;
+}
+
+.rsm-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #4beb2b;
+    margin: 12px 0 20px 0;
+}
+
+.rsm-subtext {
+    color: #78716c;
+    margin-bottom: 32px;
+}
+
+.rsm-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.rsm-primary {
+    flex: 1;
+    background: #4beb2b;
+    border: none;
+    padding: 14px;
+    border-radius: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.rsm-primary:hover {
+    background: #3ec423;
+}
+
+.rsm-secondary {
+    flex: 1;
+    background: transparent;
+    border: 2px solid #e7e5e4;
+    padding: 14px;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+.rsm-secondary:hover {
+    border-color: #a8a29e;
+}
+
+@keyframes rsmFade {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

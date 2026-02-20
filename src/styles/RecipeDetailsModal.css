@@ -1,0 +1,354 @@
+.rdm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+}
+
+.rdm-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 25, 23, 0.4);
+    backdrop-filter: blur(12px);
+}
+
+.rdm-modal {
+    position: relative;
+    background: #ffffff;
+    width: 100%;
+    max-width: 720px;
+    border-radius: 32px;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
+    overflow: hidden;
+    animation: rdmFadeIn 0.25s ease;
+}
+
+@keyframes rdmFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.rdm-header {
+    padding: 28px 36px;
+    border-bottom: 1px solid #f1f1f1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fafafa;
+}
+
+.rdm-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.rdm-header p {
+    font-size: 14px;
+    color: #777;
+    margin-top: 4px;
+}
+
+.rdm-header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.rdm-header button:hover {
+    background: #eee;
+}
+
+.rdm-body {
+    padding: 36px;
+    overflow-y: auto;
+}
+
+.rdm-field {
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.rdm-field label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.rdm-field input,
+.rdm-field textarea {
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1px solid #e4e4e4;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.rdm-field input:focus,
+.rdm-field textarea:focus {
+    border-color: #4beb2b;
+    box-shadow: 0 0 0 3px rgba(75, 235, 43, 0.2);
+}
+
+.rdm-field textarea {
+    min-height: 200px;
+    resize: none;
+    line-height: 1.6;
+}
+
+.rdm-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+
+.rdm-tag {
+    background: #e9fce3;
+    color: #2f7d1f;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #c8f3bd;
+    transition: 0.2s ease;
+}
+
+.rdm-tag button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #2f7d1f;
+}
+
+.rdm-tag:hover {
+    background: #dcfbd4;
+}
+
+.rdm-add-tag {
+    display: flex;
+    gap: 10px;
+}
+
+.rdm-add-tag input {
+    flex: 1;
+}
+
+.rdm-add-tag button {
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: 1px dashed #ccc;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.rdm-add-tag button:hover {
+    border-color: #4beb2b;
+    color: #4beb2b;
+}
+
+.rdm-footer {
+    padding: 28px 36px;
+    background: #fafafa;
+    border-top: 1px solid #f1f1f1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+}
+
+.rdm-cancel {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 12px 22px;
+    border-radius: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.rdm-cancel:hover {
+    background: #f3f3f3;
+}
+
+.rdm-save {
+    background: #4beb2b;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.rdm-save:hover {
+    background: #3ec423;
+    transform: translateY(-1px);
+}
+
+.rdm-label-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rdm-label-icon .material-symbols-outlined {
+    font-size: 18px;
+    color: #4beb2b;
+}
+
+
+.rdm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+@media (max-width: 768px) {
+    .rdm-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.rdm-image-upload {
+    border: 2px dashed #ddd;
+    border-radius: 20px;
+    padding: 32px;
+    text-align: center;
+    background: #fafafa;
+    cursor: pointer;
+    transition: 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.rdm-image-upload:hover {
+    border-color: #4beb2b;
+    background: #ffffff;
+}
+
+.rdm-upload-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    transition: 0.25s ease;
+}
+
+.rdm-image-upload:hover .rdm-upload-icon {
+    background: #e9fce3;
+    color: #4beb2b;
+}
+
+.rdm-upload-icon .material-symbols-outlined {
+    font-size: 26px;
+    color: #888;
+}
+
+.rdm-upload-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+}
+
+.rdm-upload-subtitle {
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+}
+
+.rdm-textarea-wrapper {
+    position: relative;
+}
+
+.rdm-textarea-wrapper textarea {
+    width: 100%;
+    padding-right: 44px;
+}
+
+.rdm-expand-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    transition: 0.2s ease;
+    color: #888;
+}
+
+.rdm-expand-btn:hover {
+    background: #f3f3f3;
+    color: #4beb2b;
+}
+
+.rdm-add-tag-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 12px;
+    border: 1px dashed #ccc;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s ease;
+    color: #666;
+}
+
+.rdm-add-tag-btn:hover {
+    border-color: #4beb2b;
+    color: #4beb2b;
+}
+
+.rdm-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: 0.2s ease;
+}
+
+.rdm-icon-btn:hover {
+    background: #f0f0f0;
+}
+
+.rdm-save {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
