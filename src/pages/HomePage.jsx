@@ -2,6 +2,7 @@ import "../styles/HomePage.css";
 import { APP_NAME } from "../config/appconfig";
 import BottomNav from "../components/BottomNav";
 import { useRecipes } from "../context/RecipesContext";
+import { useNavigate } from "react-router-dom";
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -13,6 +14,7 @@ export default function HomePage() {
         recentlyCooked,
         totalSaved
     } = useRecipes();
+    const navigate = useNavigate();
 
     const filledDays = planner.reduce((acc, item, index) => {
         if (item.recipeId && recipes[item.recipeId]) {
@@ -99,16 +101,23 @@ export default function HomePage() {
                     <div className="mp-recent">
                         <div className="mp-section-header">
                             <h3>Recently Cooked</h3>
-                            <button>View All</button>
+                            <button onClick={() => navigate("/recipes?filter=Recent")}>
+                                View All
+                            </button>
                         </div>
 
                         {recentlyCooked.slice(0, 3).map((item) => (
-                            <div key={item.title} className="mp-recent-card">
+                            <div
+                                key={item.id}
+                                className="mp-recent-card"
+                                onClick={() => navigate(`/recipes/${item.id}`)}
+                                style={{ cursor: "pointer" }}
+                            >
                                 <div>
                                     <h4>{item.title}</h4>
                                     <p>Last cooked: {new Date(item.lastCookedAt).toLocaleDateString()}</p>
                                 </div>
-                                <span className="material-symbols-outlined">refresh</span>
+                                {/* <span className="material-symbols-outlined">refresh</span> */}
                             </div>
                         ))}
                     </div>
@@ -116,7 +125,9 @@ export default function HomePage() {
                     <div className="mp-week">
                         <div className="mp-section-header">
                             <h3>This Week</h3>
-                            <button>Full Planner</button>
+                            <button onClick={() => navigate("/planner")}>
+                                Full Planner
+                            </button>
                         </div>
 
                         <div className="mp-week-grid">
@@ -126,7 +137,10 @@ export default function HomePage() {
                                         {day}
                                     </span>
 
-                                    <div className={`mp-day-box ${filledDays[i] ? "mp-day-filled" : ""}`}>
+                                    <div className={`mp-day-box ${filledDays[i] ? "mp-day-filled" : ""}`} onClick={() =>
+                                        navigate(`/recipes?selectDate=${planner[i].date}`)
+                                    }
+                                        style={{ cursor: "pointer" }}>
                                         {filledDays[i] ? (
                                             <>
                                                 <img src={filledDays[i].image} alt="" />

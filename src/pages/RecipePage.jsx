@@ -4,6 +4,7 @@ import "../styles/RecipePage.css";
 import { useRecipes } from "../context/RecipesContext";
 import { useNavigate } from "react-router-dom";
 import { useState, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 
 function getTimeAgo(dateString) {
     const diffMs = new Date() - new Date(dateString);
@@ -20,12 +21,32 @@ export default function RecipesPage() {
         recipes,
         recipesArray,
         toggleFavorite,
-        user
+        user,
+        planner,
+        addToPlanner
     } = useRecipes();
 
     const navigate = useNavigate();
-    const [activeFilter, setActiveFilter] = useState("All");
+    const [searchParams] = useSearchParams();
+    const filterFromURL = searchParams.get("filter");
+    const [activeFilter, setActiveFilter] = useState(filterFromURL || "All");
     const [searchTerm, setSearchTerm] = useState("");
+    const selectedDate = searchParams.get("selectDate");
+    const handleAddToPlanner = (recipeId) => {
+        const existingDay = planner.find(day => day.date === selectedDate);
+        if (!existingDay) return;
+
+        addToPlanner(selectedDate, recipeId);
+        navigate("/planner");
+
+        if (existingDay.recipeId) {
+            console.log("Slot already filled — show modal later");
+            return;
+        }
+
+        addToPlanner(selectedDate, recipeId);
+        navigate("/planner"); // go back automatically
+    };
     const filteredRecipes = useMemo(() => {
         let filtered = [...recipesArray];
 
@@ -136,7 +157,13 @@ export default function RecipesPage() {
 
                                 <div
                                     className="rv-card-left"
-                                    onClick={() => navigate(`/recipes/${item.id}`)}
+                                    onClick={() => {
+                                        if (selectedDate) {
+                                            handleAddToPlanner(item.id);
+                                        } else {
+                                            navigate(`/recipes/${item.id}`);
+                                        }
+                                    }}
                                     style={{ cursor: "pointer" }}
                                 >
                                     <div className="rv-card-img">

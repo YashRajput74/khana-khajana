@@ -95,14 +95,14 @@ export default function PlannerPage() {
                                         </div>
                                     </div>
 
-                                    <button className="pp-edit-btn">
+                                    <button className="pp-edit-btn" onClick={()=>navigate(`/recipes?selectDate=${planner[index].date}`)}>
                                         <span className="material-symbols-outlined">edit</span>
                                     </button>
                                 </div>
                             ) : (
                                 <div
                                     className="pp-empty"
-                                    onClick={() => navigate("/recipes")}
+                                    onClick={() => navigate(`/recipes?selectDate=${planner[index].date}`)}
                                     style={{ cursor: "pointer" }}
                                 >
                                     <span className="material-symbols-outlined">add</span>
