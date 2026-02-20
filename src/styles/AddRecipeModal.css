@@ -1,0 +1,93 @@
+.arm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.arm-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 25, 23, 0.4);
+    backdrop-filter: blur(8px);
+}
+
+.arm-modal {
+    position: relative;
+    background: #ffffff;
+    padding: 36px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    animation: armFade 0.2s ease;
+}
+
+@keyframes armFade {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.arm-modal h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.arm-modal p {
+    font-size: 14px;
+    color: #666;
+}
+
+.arm-modal input {
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+    outline: none;
+}
+
+.arm-modal input:focus {
+    border-color: #4beb2b;
+    box-shadow: 0 0 0 3px rgba(75, 235, 43, 0.2);
+}
+
+.arm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.arm-cancel {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 10px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.arm-save {
+    background: #4beb2b;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.arm-save:hover {
+    background: #3ec423;
+}

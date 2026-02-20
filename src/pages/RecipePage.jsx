@@ -2,9 +2,11 @@ import BottomNav from "../components/BottomNav";
 import { APP_NAME } from "../config/appconfig";
 import "../styles/RecipePage.css";
 import { useRecipes } from "../context/RecipesContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import RecipeSavedModal from "../components/RecipeSavedModal";
+import RecipeDetailsModal from "../components/RecipeDetailsModal";
+import AddRecipeModal from "../components/AddRecipeModal";
 
 function getTimeAgo(dateString) {
     const diffMs = new Date() - new Date(dateString);
@@ -32,20 +34,20 @@ export default function RecipesPage() {
     const [activeFilter, setActiveFilter] = useState(filterFromURL || "All");
     const [searchTerm, setSearchTerm] = useState("");
     const selectedDate = searchParams.get("selectDate");
+    const { addRecipe } = useRecipes();
+
+    const [showSavedModal, setShowSavedModal] = useState(false);
+    const [detailsModalId, setDetailsModalId] = useState(null);
+    const [newRecipeTitle, setNewRecipeTitle] = useState("");
+    const [createdRecipeId, setCreatedRecipeId] = useState(null);
+    const [showAddModal, setShowAddModal] = useState(false);
+
     const handleAddToPlanner = (recipeId) => {
         const existingDay = planner.find(day => day.date === selectedDate);
         if (!existingDay) return;
 
         addToPlanner(selectedDate, recipeId);
         navigate("/planner");
-
-        if (existingDay.recipeId) {
-            console.log("Slot already filled — show modal later");
-            return;
-        }
-
-        addToPlanner(selectedDate, recipeId);
-        navigate("/planner"); // go back automatically
     };
     const filteredRecipes = useMemo(() => {
         let filtered = [...recipesArray];
@@ -192,7 +194,10 @@ export default function RecipesPage() {
                                 </div>
 
                                 <div className="rv-card-actions">
-                                    <button onClick={() => toggleFavorite(item.id)}>
+                                    <button
+                                        className={`rv-fav-btn ${item.isFavorite ? "active" : ""}`}
+                                        onClick={() => toggleFavorite(item.id)}
+                                    >
                                         <span className="material-symbols-outlined">
                                             {item.isFavorite ? "star" : "star_outline"}
                                         </span>
@@ -212,10 +217,41 @@ export default function RecipesPage() {
 
             <button
                 className="rv-fab"
-                onClick={() => navigate("/add-recipe")}
+                onClick={() => setShowAddModal(true)}
             >
                 <span className="material-symbols-outlined">add</span>
             </button>
+
+            {showAddModal && (
+                <AddRecipeModal
+                    onClose={() => setShowAddModal(false)}
+                    onSave={(title) => {
+                        const newId = addRecipe(title);
+                        setCreatedRecipeId(newId);
+                        setNewRecipeTitle(title);
+                        setShowAddModal(false);
+                        setShowSavedModal(true);
+                    }}
+                />
+            )}
+
+            {showSavedModal && (
+                <RecipeSavedModal
+                    recipeTitle={newRecipeTitle}
+                    onAddDetails={() => {
+                        setShowSavedModal(false);
+                        setDetailsModalId(createdRecipeId);
+                    }}
+                    onClose={() => setShowSavedModal(false)}
+                />
+            )}
+
+            {detailsModalId && (
+                <RecipeDetailsModal
+                    recipeId={detailsModalId}
+                    onClose={() => setDetailsModalId(null)}
+                />
+            )}
 
             <BottomNav />
         </div>

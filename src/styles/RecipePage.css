@@ -204,3 +204,39 @@
 .rv-fab:hover {
     transform: scale(1.08);
 }
+
+/* FAVORITE BUTTON */
+.rv-fav-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    background: #f6f8f6;
+   
+}
+
+.rv-fav-btn .material-symbols-outlined {
+    font-size: 22px;
+    color: #9aa59a;
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+.rv-fav-btn:hover {
+    background: #eef6ec;
+    transform: scale(1.05);
+}
+
+/* Active (Favorited) */
+.rv-fav-btn.active {
+    background: #eaffea;
+}
+
+.rv-fav-btn.active .material-symbols-outlined {
+    color: #4deb2d;
+    font-variation-settings: "FILL" 1;
+}
+.rv-fav-btn.active {
+    background: #eaffea;
+    box-shadow: 0 4px 12px rgba(77, 235, 45, 0.25);
+}
