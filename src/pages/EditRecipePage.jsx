@@ -1,4 +1,4 @@
-import "./EditRecipePage.css";
+import "../styles/EditRecipePage.css";
 
 export default function EditRecipePage() {
     return (

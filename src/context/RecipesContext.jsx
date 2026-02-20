@@ -9,7 +9,10 @@ export function RecipesProvider({ children }) {
     const [user, setUser] = useState(mockUser);
 
     const recipesArray = useMemo(() => {
-        return Object.values(recipes);
+        return Object.entries(recipes).map(([id, recipe]) => ({
+            id,
+            ...recipe
+        }));
     }, [recipes]);
 
     const favorites = useMemo(() => {

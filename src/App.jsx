@@ -6,6 +6,7 @@ import PlannerPage from "./pages/PlannerPage";
 import RecipeDetailPage from "./pages/RecipeDetailPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import { RecipesProvider } from "./context/RecipesContext";
+import EditRecipePage from "./pages/EditRecipePage";
 
 export default function App() {
     return (
@@ -17,6 +18,7 @@ export default function App() {
                     <Route path="/planner" element={<PlannerPage />} />
                     <Route path="/recipes/:id" element={<RecipeDetailPage />} />
                     <Route path="/favorites" element={<FavoritesPage />} />
+                    <Route path="/recipes/add" element={<EditRecipePage />} />
                 </Routes>
             </Router>
         </RecipesProvider>

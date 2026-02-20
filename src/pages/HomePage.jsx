@@ -7,6 +7,7 @@ const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export default function HomePage() {
     const {
+        user,
         planner,
         recipes,
         recentlyCooked,
@@ -23,6 +24,12 @@ export default function HomePage() {
         }
         return acc;
     }, {});
+
+    const hour = new Date().getHours();
+    let greeting = "Good Evening";
+
+    if (hour < 12) greeting = "Good Morning";
+    else if (hour < 18) greeting = "Good Afternoon";
 
     return (
         <div className="mp-page">
@@ -42,10 +49,7 @@ export default function HomePage() {
                     </div>
 
                     <button className="mp-profile-btn">
-                        <img
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIlOrpchfBuUZifLzjj72wZn-oH0lht3FCGx_rdps_n8wK9CQWGd6NBUOszn1rSmgxjI3qRVI54NcyEG8619qBpz3YOOai7vwk-gWMghYPdnaBZnMxRO8sFii9cZIQh1KO5vo6v7ft-SycjMDGutk0Iy6s4lnYiPffso2dmYvWeKFaFgHnW09IwYftdc3p8OgoBuQI2rPhUsNHaYjd6mrraV5qeQCpvwco6mPqRHv75SB0HOBxJQpw3UkM0cG5Fpt9hYB3YVJZVQ"
-                            alt="profile"
-                        />
+                        <img src={user.avatar} />
                     </button>
                 </div>
             </header>
@@ -53,7 +57,7 @@ export default function HomePage() {
             <main className="mp-main">
 
                 <div className="mp-intro">
-                    <h1>Good Evening</h1>
+                    <h1>{greeting}</h1>
                     <p>Cook is asking again? Let’s decide in 10 seconds.</p>
                 </div>
 
