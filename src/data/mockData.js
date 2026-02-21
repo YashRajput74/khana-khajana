@@ -1,255 +1,173 @@
 export const mockRecipes = {
     'rec_001': {
-        title: "Rustic Veggie Stew",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCb9sxeDpujnlP9vgt7UVEIuEqnrFzKxvG-gANa8FjtNjPw0dWlRUoj5XJK8Vtgmu8kQ-ZMiCe54jpQ2GnKLssVhn3l5G0T1l64tswnN68xgfAg_SVCHrbVb9_D-NI39aWdGF96mnbmweEDb-QqL8e40_CWVnY3NBwXUEOSNzQFLAmnSRDKNA0FZfbEXmh9WjyPcYWO5vtUAcTFiV3rcqpOv50Y6eMhXpaQxM3D93NGtkPUk-cBa-ElKIH4DSaVUY6Nfk8UwWxQeA",
+        title: "Vegetable Biryani",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAnypJ397UtoOPeeeY243gmX13hX4joIA6QONBojAPEfIrOlQ8bhu10ZlgSmkoSS0RDK5Iyhyxs5BKr2SxyU49wXf2BbFPuZg6yG1LCp2r7i_oq74tsMQ7HLJEV42MGFzH3Lz9M8iOkCB3Vfi3jNC6zxY8-uq3FNJu_eJDiG1WnqRcLzucaVHDSO0MjG0wtHlENcFGMgqHBrpAcXLS9UOArW5sre9g-UUfHnMvkAtdF7Woe3tA9UJch4xh6iUgvs-hJQAQ8fOPuXg",
         category: "Dinner",
-        tags: ["Healthy", "Vegetarian", "Comfort Food"],
-        cookingTime: 45,
-        addedAt: "2026-02-10T09:00:00.000Z",
-        lastCookedAt: "2026-02-18T18:00:00.000Z",
+        tags: ["Indian", "Vegetarian", "Spicy", "Rice"],
+        cookingTime: 50,
+        addedAt: "2026-02-21T10:00:00.000Z",
+        lastCookedAt: null,
         isFavorite: true,
         steps: [
-            "Chop all vegetables.",
-            "Heat olive oil in a large pot.",
-            "Add vegetables and sauté for 5 minutes.",
-            "Pour in vegetable broth and simmer for 30 minutes.",
-            "Season and serve warm."
+            "Rinse and soak basmati rice for 30 minutes.",
+            "Heat oil or ghee in a large pot.",
+            "Sauté onions until golden brown.",
+            "Add ginger-garlic paste and cook briefly.",
+            "Add chopped vegetables and cook for 5–7 minutes.",
+            "Stir in spices (turmeric, garam masala, chili powder).",
+            "Add soaked rice and water (2 cups water per cup rice).",
+            "Cover and cook on low heat for 15–20 minutes.",
+            "Let it rest for 5 minutes before fluffing with a fork.",
+            "Garnish with coriander and serve hot."
         ]
     },
-
     'rec_002': {
-        title: "Pizza",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuB8Cbce5OpoVcyyutosQePLnLsmMcnT7RCfb6FHllho8_CK4M_KBa0GaKPeX__A7d9znE1-f-1SzoLTANWVtOUiWwW_l0Ip9SzxNuo6-7nRadUwhwTrLRoaOet6FyJtjZweoqYsh9wJIhv6wxbPZiVdG9UxlZuZdxHN1noldNTbOtaskbEiVTWUgi4AoeXvy52pYbmxNpqBthBVnWUlxXCIr_cseum6WPRt9ABPLVHSriCGU5GWO30MzFAGnMqoQB7fFLRX-h2Gqw",
-        category: "Dinner",
-        tags: ["Italian", "Cheesy", "Baked"],
-        cookingTime: 25,
-        addedAt: "2026-02-11T12:00:00.000Z",
-        lastCookedAt: "2026-02-14T19:30:00.000Z",
+        title: "Masala Dosa",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBzcxpNp3FZKK4quJXuKZepFqiCDefCdw4wh6J_Rmoasi-5vk7wQzRGf_udYFI2lnERV7G4aSUobbGDSrEYMw_15xeXDdtvgJEAxgB2bDHY1sh0rr1aM32LeqrgPgVYELErwWRj3OrHraVV2Ag78puqboni6OytPM4rMoxg32Q1R7DGOp0pNKJg4dB2_H3R2FEd22F3f2JQ_LaugpI4ZKfNbyAs99xggHaQlKcjGLbDuDPulcMGcjugaHHFk3S8-EOeFwiI51k5cg",
+        category: "Breakfast",
+        tags: ["Indian", "Vegetarian", "South Indian", "Crispy"],
+        cookingTime: 40,
+        addedAt: "2026-02-21T10:30:00.000Z",
+        lastCookedAt: null,
         isFavorite: false,
         steps: [
-            "Preheat oven to 220°C.",
-            "Roll out pizza dough.",
-            "Spread tomato sauce evenly.",
-            "Add cheese and toppings.",
-            "Bake for 12–15 minutes until golden."
+            "Prepare dosa batter (fermented rice and urad dal batter).",
+            "Boil and mash potatoes for the filling.",
+            "Heat oil in a pan and sauté mustard seeds, curry leaves, onions, and green chilies.",
+            "Add turmeric and mashed potatoes, mix well to form masala filling.",
+            "Heat a flat tawa and spread dosa batter thinly in circular motion.",
+            "Drizzle oil around the edges and cook until crispy.",
+            "Place potato masala in the center.",
+            "Fold the dosa and serve hot with chutney and sambar."
         ]
     },
-
     'rec_003': {
-        title: "Spicy Lentil Soup",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuB-p0nMtqAW7vJoEQcItCWWpL_NHIpN8n9QZIsRBfYEHB-nRYSPIgPvCAfwQjr0lO93fmYRddywxvM3tl8CZ5jkMtBTa7J1HhOp3VO7-9nxpW5nwkYP6OJ9QQP76rAN7poB5e6CjJ4bap4MXDMK29_YHMj2kxbM0SPtc1DII4vG8HYWYF8BmygvV62QvG7bZ75Qv-cDbuNPt3i3X_7jPbuYQLr5rZZw9V5V8zSK4teP-e-06vrhMYH74j5X0iduZl_pabgGqHlJxA",
-        category: "Lunch",
-        tags: ["Spicy", "Quick", "Vegan"],
-        cookingTime: 30,
-        addedAt: "2026-02-10T10:00:00.000Z",
-        lastCookedAt: "2026-02-16T18:00:00.000Z",
-        isFavorite: true,
+        title: "Stuffed Paratha",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCM_3sg2NQiyddRsFDWAQ_ikFbxIYWPcMV1X0pV2aeziDeO8swlfHbQP4UpD649awiqv4FRX3KiXHyWPVRJrDp6Zzunhz09NQRAATymV_6i64RYzJ5IplwlAO7FOtvxNPUc9VgjdfK8r_P4KbOXHDUQ-9AiwGGYWBtX7WFov7daST6GsidtZBKcEDuhh7AhvEqjkNb2vSXCNFx4RDVdTBbIMhDVWg28L85yWHErjK5bA_R9kcmo99WPkDNJwCZ2mxdjoAwHvxPB9w",
+        category: "Breakfast",
+        tags: ["Indian", "Vegetarian", "North Indian", "Comfort Food"],
+        cookingTime: 35,
+        addedAt: "2026-02-21T11:00:00.000Z",
+        lastCookedAt: null,
+        isFavorite: false,
         steps: [
-            "Heat olive oil in a large pot over medium heat. Sauté the chopped onions, carrots, and celery until softened, about 5–7 minutes.",
-            "Add garlic, cumin, curry powder, and thyme. Cook for about 1 minute until fragrant.",
-            "Pour in the diced tomatoes, lentils, and vegetable broth. Bring to a boil, then simmer for 25–30 minutes.",
-            "Stir in the spinach and cook until wilted. Season with salt, pepper, and lemon juice."
+            "Prepare whole wheat dough and let it rest for 15–20 minutes.",
+            "Prepare stuffing (spiced mashed potatoes, paneer, or mixed vegetables).",
+            "Divide dough into equal balls.",
+            "Roll one ball slightly and place stuffing in the center.",
+            "Seal the edges and roll gently into a flat circle.",
+            "Heat a tawa and place the paratha on it.",
+            "Cook on both sides, applying ghee or oil until golden brown spots appear.",
+            "Serve hot with yogurt, pickle, or butter."
         ]
     },
-
     'rec_004': {
-        title: "Avocado Super Bowl",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuB8Cbce5OpoVcyyutosQePLnLsmMcnT7RCfb6FHllho8_CK4M_KBa0GaKPeX__A7d9znE1-f-1SzoLTANWVtOUiWwW_l0Ip9SzxNuo6-7nRadUwhwTrLRoaOet6FyJtjZweoqYsh9wJIhv6wxbPZiVdG9UxlZuZdxHN1noldNTbOtaskbEiVTWUgi4AoeXvy52pYbmxNpqBthBVnWUlxXCIr_cseum6WPRt9ABPLVHSriCGU5GWO30MzFAGnMqoQB7fFLRX-h2Gqw",
-        category: "Lunch",
-        tags: ["Healthy", "Fresh", "Quick"],
-        cookingTime: 15,
-        addedAt: "2026-02-09T11:00:00.000Z",
-        lastCookedAt: "2026-02-15T13:00:00.000Z",
+        title: "Baingan Bharta",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCYZUekvkpXLHoiAj3uIUVRBWA67BIrwSCRQhL37G0r8F87YmcO0NnrUeXI9POd68GBeujIuv6x-dymx86OO73JBNxOKFaNn5hEczSAcfMnzUh2-WG4MCtgR7DWhvLxLGiMgkRUbBsdRhLPnyQyZVlapwlLNvXidL6lFWBnwNF7_50F-ISVtpQo4hgQR6p67dlMUdWLYuYe193-I3sjoQOFtnb_Zm9TpjLusWE7AKPqfcwmclmrLX_PtxurZzK7I1QjjvwP3i3cvg",
+        category: "Dinner",
+        tags: ["Indian", "Vegetarian", "Smoky", "North Indian"],
+        cookingTime: 45,
+        addedAt: "2026-02-21T11:20:00.000Z",
+        lastCookedAt: null,
         isFavorite: false,
         steps: [
-            "Slice avocado and vegetables.",
-            "Cook quinoa or rice.",
-            "Arrange everything in a bowl.",
-            "Drizzle with dressing.",
-            "Serve immediately."
+            "Roast the whole eggplant over open flame or in the oven until charred and soft.",
+            "Let it cool, peel off the burnt skin, and mash the pulp.",
+            "Heat oil in a pan and sauté cumin seeds.",
+            "Add chopped onions, green chilies, and ginger-garlic paste; cook until golden.",
+            "Stir in chopped tomatoes and cook until soft.",
+            "Add turmeric, red chili powder, and salt.",
+            "Mix in the mashed eggplant and cook for 5–7 minutes.",
+            "Garnish with fresh coriander and serve hot with roti or naan."
         ]
     },
-
     'rec_005': {
-        title: "Sunday Pancakes",
-        image: "",
-        category: "Breakfast",
-        tags: ["Sweet", "Weekend", "Easy"],
-        cookingTime: 20,
-        addedAt: "2026-02-08T08:30:00.000Z",
-        lastCookedAt: "2026-02-13T09:00:00.000Z",
-        isFavorite: true,
+        title: "Palak Paneer",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDd1mai3LvPPMopLO5BUyZ_U-xMgJx5hTiieG5cC-yCe6aI1r38Xp4vAGh0zbRjxAzAUkVITEsQFlWZUbKNAfl--wmhHlTokhtDxBavi9fUSO55Ui76apYlt248PGJT4qp7CinAR2IlfoqsI5fQA18v2SAV_iPeObsfFEpxni11FYCqwBMadVou-J7DgHQvyfUy_nfBblRZCjryS_xby1mXmzXj1Q734bqwYhZbPl6WSt7uIa6NxOyqjhvaZfTJgjflRm688N40tw",
+        category: "Dinner",
+        tags: ["Indian", "Vegetarian", "North Indian", "Paneer"],
+        cookingTime: 40,
+        addedAt: "2026-02-21T11:40:00.000Z",
+        lastCookedAt: null,
+        isFavorite: false,
         steps: [
-            "Mix flour, sugar, and baking powder.",
-            "Whisk in milk and eggs.",
-            "Heat butter in a pan.",
-            "Pour batter and cook both sides.",
-            "Serve with syrup."
+            "Wash spinach thoroughly and blanch in boiling water for 2–3 minutes.",
+            "Transfer spinach to ice water, then blend into a smooth puree.",
+            "Heat oil or ghee in a pan and sauté cumin seeds.",
+            "Add chopped onions and cook until golden brown.",
+            "Stir in ginger-garlic paste and cook briefly.",
+            "Add tomato puree and cook until oil separates.",
+            "Mix in turmeric, garam masala, and salt.",
+            "Add spinach puree and simmer for 5–7 minutes.",
+            "Add paneer cubes and cook for another 3–5 minutes.",
+            "Finish with a splash of cream (optional) and serve hot."
         ]
     },
-
     'rec_006': {
-        title: "Lemon Herb Roasted Chicken",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuABIPd9DDP0PAtzshAn9ZvWoQxKlqee4Vi1sr1kNFq_p1QPYg81Ru2SVpOsggLLw4j-8GPtAKfbNTr6siGxWtzGxUkLInEWczaFcHJDPyyC0OFWnf1RFN8kQuoA8Me4kcFDemUuKBkiwjADHMLJc2RKnfknIH1gAJBImPHYjR-90KiRcOdrfeidgy663NprX3EiFCMP_cv_P-eg0WbLTXyz3ki_B_iKq31Lj2rY_sPfSx0uLteecGa9rUk5_jo1fZnQBU2bdkUIUQ",
+        title: "Chana Masala",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAhYMjogJ4FUQIMBAsSCP94-1VN3nEICAGZnxpAvgn7mwsLahXhpW1gfd9GwqY9lw5ot4juk_yg8yoWP7DhiIfLifepwKIJ-mcNjo-TAevTzG5dmbY87vKrNFU1cOE_aYO7haWGzbzcLLvKL5JTvbsFPuy9FgAcHHPq3D6qeh84cYCViTT70FzL8z-_BIuxqifCKA2bOYY_ImZrqYrauRwUrf89eEvxVICAfL3t0IVS94GmdrIoNSQm5VhvhSgHNqYdc9dtx8l0pQ",
         category: "Dinner",
-        tags: ["Chicken", "Herb", "Roasted"],
-        cookingTime: 60,
-        addedAt: "2026-02-12T17:00:00.000Z",
-        lastCookedAt: "2026-02-16T18:00:00.000Z", // 3 days ago
+        tags: ["Indian", "Vegetarian", "Spicy", "Protein-Rich"],
+        cookingTime: 35,
+        addedAt: "2026-02-21T12:00:00.000Z",
+        lastCookedAt: null,
         isFavorite: false,
         steps: [
-            "Preheat oven to 200°C.",
-            "Rub chicken with olive oil, lemon juice, and herbs.",
-            "Season with salt and pepper.",
-            "Roast for 50–60 minutes until golden.",
-            "Rest before slicing and serving."
+            "Soak chickpeas overnight and pressure cook until soft (or use canned chickpeas).",
+            "Heat oil in a pan and sauté cumin seeds and bay leaf.",
+            "Add chopped onions and cook until golden brown.",
+            "Stir in ginger-garlic paste and green chilies; cook briefly.",
+            "Add chopped tomatoes and cook until soft and oil separates.",
+            "Mix in turmeric, coriander powder, red chili powder, and garam masala.",
+            "Add cooked chickpeas along with some cooking water.",
+            "Simmer for 10–15 minutes until thickened.",
+            "Adjust salt and garnish with fresh coriander.",
+            "Serve hot with rice or roti."
         ]
     },
-
     'rec_007': {
-        title: "Creamy Basil Pesto Pasta",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBnLIfvtSpybvT_x_JsfW3Og_lqM0BWPSlrMNTBQM9pLPktFdD7eQEhhn7z4oQ0sWjx9Lx32yEq2IGTnwkI5MyVZ5qCs-0N8DQ0M_648RXJh97wW_S-AR9VdKxHRpjUt3FY5BlBbCCHvMNrt8PO4cId6HjV1gTPJjmZyMVHApRI8WnImoZw8hgiT4Ye1OuvglyWn2n3kaCs2qCdCMZGpJSIzjj8BZvEsDQv2rdyFA5XV2O3eOqThk07VO9A1dqrvbzzf04_IieaAg",
-        category: "Quick Meal",
-        tags: ["Pasta", "Italian", "Creamy"],
-        cookingTime: 20,
-        addedAt: "2026-01-15T12:00:00.000Z",
-        lastCookedAt: "2026-01-19T18:00:00.000Z", // ~1 month ago
+        title: "Dal Makhni",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD7WGxd7PjQJqUff5-BVqfji-U3YTVERs6lPuKYRsgW0BTZxnWncf6q1Xz4Xx69puM98LO7f7Z9PuH534QotKeQ9U4QcPT7KHuOVuQ9XKt47XDB9gL8tQs_hzSRkI9kkhfEPrTLVB7PzIUvA9gjvSmIHEnLggNUGvg-0-W2d10iUVimeXpVhiEAbG68te19vI187Pjx-sGE882db7gTcFxn976JuEPgYB0GpZxeKuI_jGn1v6MUQV0iSkb0iro2cnariBJM6iMFPw",
+        category: "Dinner",
+        tags: ["Indian", "Vegetarian", "Creamy", "Punjabi"],
+        cookingTime: 60,
+        addedAt: "2026-02-21T12:15:00.000Z",
+        lastCookedAt: null,
         isFavorite: false,
         steps: [
-            "Boil pasta until al dente.",
-            "Prepare basil pesto.",
-            "Mix pesto with cream in a pan.",
-            "Combine pasta with sauce.",
-            "Serve with grated parmesan."
+            "Soak whole black lentils (urad dal) and kidney beans overnight.",
+            "Pressure cook lentils and beans until soft and tender.",
+            "Heat butter in a pan and sauté cumin seeds.",
+            "Add chopped onions and cook until golden brown.",
+            "Stir in ginger-garlic paste and cook briefly.",
+            "Add tomato puree and cook until oil separates.",
+            "Mix in red chili powder, turmeric, and garam masala.",
+            "Add cooked lentils and simmer on low heat for 20–30 minutes.",
+            "Stir in fresh cream and simmer for 5 more minutes.",
+            "Garnish with butter and serve hot."
         ]
     },
-
     'rec_008': {
-        title: "Avocado & Egg Toast",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBSgXy-Obr7s4R9GvFwy6fc9flr9iuJcBhIyBxI8fw2SZd3SAZNNAT1XU3tEoJe2S8EdUAJBp0vIzV_J3x83QqSbP_uetQemUZep7qNFGduzgiJVmbhF1TESBk9lEscxXeIjZVwOYxWplczaAbA4HN3I3TwAUhMGBLoHgp8CvJ8HdLhPVzn1jOBhj95wFsoxD5Q6pXEVLItp49k25LpZr2tj5BJLCpXFV3etQHtqalVXacWeyQHlSDBn_z6Zgr69U-T9HLBoboxmg",
-        category: "Breakfast",
-        tags: ["Healthy", "Quick", "Protein"],
-        cookingTime: 10,
-        addedAt: "2025-12-10T08:00:00.000Z",
-        lastCookedAt: "2025-12-20T09:00:00.000Z", // ~2 months ago
-        isFavorite: true,
-        steps: [
-            "Toast the bread slices.",
-            "Mash avocado with salt and pepper.",
-            "Fry or poach eggs.",
-            "Spread avocado on toast.",
-            "Top with egg and serve."
-        ]
-    },
-
-    'rec_009': {
-        title: "Homemade Pizza",
-        image: null, // planner uses icon instead of image
+        title: "Aloo Gobhi",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAqZupEYIAyPLntBhpPcj78TfaAWc7dhy080NLe4sSTwlU7v3wBg1hJAl-tS0-Dr-GyLHWT2-kpuBf12gl7X4lSJluxk8ZhKIcxsNBMNNe2J35yBGBFL5nGzKrkzDSUbk85LOhIIybLudpBZyxTFm27MuYW2gg4icL1v1EuMibtfb54u3NmMEz4khHSD0_Ujjb66MLmZITt1EEWHqVat17EU-WSubjDH-VEX4xRDnvbuN0Zei9_2KRyvzy0B8-mxm1SH7mUaKAxsA",
         category: "Dinner",
-        tags: ["Italian", "Fun", "Family"],
+        tags: ["Indian", "Vegetarian", "Dry Curry", "North Indian"],
         cookingTime: 30,
-        addedAt: "2026-02-11T16:00:00.000Z",
-        lastCookedAt: "2026-02-17T19:00:00.000Z",
+        addedAt: "2026-02-21T12:30:00.000Z",
+        lastCookedAt: null,
         isFavorite: false,
         steps: [
-            "Prepare or roll out pizza dough.",
-            "Spread tomato sauce evenly.",
-            "Add mozzarella and toppings of choice.",
-            "Bake at 220°C for 12–15 minutes.",
-            "Slice and serve hot."
+            "Wash and cut cauliflower into florets and dice the potatoes.",
+            "Heat oil in a pan and add cumin seeds.",
+            "Add chopped onions and sauté until translucent.",
+            "Stir in ginger-garlic paste and cook briefly.",
+            "Add turmeric, coriander powder, red chili powder, and salt.",
+            "Add potatoes and cook for 5 minutes.",
+            "Add cauliflower florets and mix well with spices.",
+            "Cover and cook on low heat for 15–20 minutes, stirring occasionally.",
+            "Garnish with fresh coriander and serve hot with roti or rice."
         ]
-    },
-
-    'rec_010': {
-        title: "Grandma's Sunday Roast",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuALvPIiTbDT1oU-uUtHnf4CuI_cIUEyK3ztLu592RGGXGFy4P7bODvFVwE7n0P6eoBkaaK0h4fp_H0yN0B7_xH40kaELzcbDFDBqjXdJgHJiOlXm-H6weFe6znjaBVgjuX8-UR6xWDatB7ErEjY5LmydFbEWiksmudtIZWlAqZMDqgggcKIRh--ferGXNcw2YOdZd-MN7zDl9w5CJL-PheGCi2e2vLFS3oAfIeh3o87bGKx_UmTIXXcpQ17OxQvw7WRnWiiVS3EBQ",
-        category: "Dinner",
-        tags: ["Traditional", "Roast", "Family"],
-        cookingTime: 90,
-        addedAt: "2026-02-05T12:00:00.000Z",
-        lastCookedAt: "2026-02-14T18:00:00.000Z",
-        isFavorite: true,
-        steps: [
-            "Season the meat generously.",
-            "Preheat oven to 180°C.",
-            "Roast with vegetables for 1.5 hours.",
-            "Rest before slicing.",
-            "Serve with gravy."
-        ]
-    },
-
-    'rec_011': {
-        title: "Lemon Basil Pasta",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCPIAWfSIp1ac0USpNQwDTNRHfVmGR3S0zxCFV2zpCkz96AjywqKS0zlShtIfJRHmjWBlDAaA8OwK4gJlUDhEeqVkzGiGC2oPFw1PCS8qhWRdyNFxmFv2yZI5HAI1axjFgxNlUCWJkuvdjnafdbKVtIle-8QOViBedm178AJO2NeQvbYej3SzVDsRPfy1cKTGuc0J7Ev9TVeNbDqT6eixtIgP7lKKGxTjWIq6DaT1O2fUlgS-O_pKOXFcuwIy_Jom7ulDbniGlp1A",
-        category: "Lunch",
-        tags: ["Pasta", "Fresh", "Citrus"],
-        cookingTime: 25,
-        addedAt: "2026-01-20T12:00:00.000Z",
-        lastCookedAt: "2026-02-05T13:00:00.000Z",
-        isFavorite: true,
-        steps: [
-            "Cook pasta until al dente.",
-            "Prepare lemon zest and basil mix.",
-            "Toss pasta with olive oil and herbs.",
-            "Add parmesan and mix well.",
-            "Serve warm."
-        ]
-    },
-
-    'rec_012': {
-        title: "Spicy Tofu Stir Fry",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAkQC6fGomtUvuRSCr4B9p7YVxffWK6kNIbNjh_TXRSHv4fDL2HL13ENHUu-snCaCl1_sUFby0Gyr4e3YHq0JSQlOzWVs0WI51iA3fN9JtE-rDMaaP-dmqXqizRBEb-6tIdhgrbLRcvx-Rh1UHZzzwMWnEiURHo8J9-0b5IPK55zR7fBOETyi0JgYTEXZDngWZtrlZp6c41y7J_IXJhBs76UjC8KVncqiQjF0v-QS0JYcdMV6uM7rzK4uguUpMFkhfPki6UhLk9aw",
-        category: "Dinner",
-        tags: ["Vegan", "Spicy", "Asian"],
-        cookingTime: 20,
-        addedAt: "2026-01-10T18:00:00.000Z",
-        lastCookedAt: "2026-01-19T18:00:00.000Z",
-        isFavorite: true,
-        steps: [
-            "Press and cube tofu.",
-            "Stir fry vegetables in oil.",
-            "Add tofu and spicy sauce.",
-            "Cook for 5–7 minutes.",
-            "Serve with rice."
-        ]
-    },
-
-    'rec_013': {
-        title: "Berry Oatmeal Bowl",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuB9MXBroWRjBElpMohMszQ8AFNV4NNZhzhs1w4nf3AERmLY19W5CxgnZia85Uiqq1NVvHbzQYHjYLNSZCk7t2upMS3KknK2gaThhpfJKcIsSbL25Gd9JA1H8AJZ-WJ2TTwJ1J4e3-AvmY5VTdq8eIkAF8G5t90Mv3-SILxiOxe-ogDkh4QqxJiMLvA8EVs4tfbJbxLTllV6v93IbGye_RYHDKzKGkup8mmcIxU8f3fZVZxAHyQ_NE6qMz96hPZTS1redQ7bgq0y8A",
-        category: "Breakfast",
-        tags: ["Healthy", "Sweet", "Quick"],
-        cookingTime: 10,
-        addedAt: "2026-02-01T08:00:00.000Z",
-        lastCookedAt: "2026-02-18T08:00:00.000Z",
-        isFavorite: true,
-        steps: [
-            "Cook oats with milk or water.",
-            "Add fresh berries on top.",
-            "Drizzle honey or maple syrup.",
-            "Add nuts or seeds if desired.",
-            "Serve warm."
-        ]
-    },
-
-    'rec_014': {
-        title: "Classic Beef Burger",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCL6mUP0TcWOBsBN4SqFrt9R4fjtjou2JEfsgVBwcnNREuIDhBfc8-Pt0ceTNBSPLOvSpo_evFauTatFMDod1mjbqnDgwvdNc6z3wZAX8cQwOQXy7HZY4IjdZFPxy6c2bb1PKg3ASfsJWj5CT8ysiB64cVdYiL-BYN--GFuI6xe0vzxw_4pSbvXD9Ou0NsY3omESIxFtuN3VoBySi86gj-OMm0A0K7ymW8SU02g8Ho1saECJHW0GOdt0fKEJLv1cmGlgJlrjXqPLA",
-        category: "Dinner",
-        tags: ["Beef", "Grill", "Classic"],
-        cookingTime: 25,
-        addedAt: "2026-01-25T18:00:00.000Z",
-        lastCookedAt: "2026-01-29T19:00:00.000Z",
-        isFavorite: true,
-        steps: [
-            "Season ground beef and form patties.",
-            "Grill or pan-fry for 4–5 minutes per side.",
-            "Toast burger buns.",
-            "Assemble with lettuce, tomato, and sauce.",
-            "Serve hot."
-        ]
-    },
-
+    }
 };
 
 export const mockPlanner = [

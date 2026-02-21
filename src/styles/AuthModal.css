@@ -1,0 +1,180 @@
+.mpAuth_overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+.mpAuth_modal {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 40px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    animation: mpAuth_fadeIn 0.2s ease;
+}
+
+@keyframes mpAuth_fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mpAuth_header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.mpAuth_icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 20px;
+    background: rgba(75, 235, 43, 0.15);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4beb2b;
+}
+
+.mpAuth_title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.mpAuth_toggle {
+    display: flex;
+    background: #f3f3f3;
+    border-radius: 16px;
+    padding: 4px;
+}
+
+.mpAuth_toggleBtn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 8px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.mpAuth_active {
+    background: #4beb2b;
+    color: #111;
+}
+
+.mpAuth_form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mpAuth_field label {
+    font-size: 14px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.mpAuth_field input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.mpAuth_field input:focus {
+    border-color: #4beb2b;
+    box-shadow: 0 0 0 3px rgba(75, 235, 43, 0.15);
+}
+
+.mpAuth_submit {
+    margin-top: 10px;
+    padding: 14px;
+    border: none;
+    border-radius: 18px;
+    font-weight: 700;
+    background: #4beb2b;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.mpAuth_submit:hover {
+    background: #3ec423;
+}
+
+.mpAuth_divider {
+    text-align: center;
+    margin: 25px 0;
+    position: relative;
+}
+
+.mpAuth_divider::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background: #eee;
+    top: 50%;
+    left: 0;
+}
+
+.mpAuth_divider span {
+    background: #fff;
+    padding: 0 10px;
+    position: relative;
+    color: #999;
+}
+
+.mpAuth_googleBtn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 18px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.mpAuth_googleBtn:hover {
+    background: #f7f7f7;
+}
+
+.mpAuth_profileContent {
+    padding: 20px;
+    text-align: center;
+}
+
+.mpAuth_email {
+    margin-bottom: 16px;
+    color: #555;
+    word-break: break-all;
+}
+
+.mpAuth_logoutBtn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #f44336;
+    color: white;
+    cursor: pointer;
+}

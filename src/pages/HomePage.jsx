@@ -6,8 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import RecipeSavedModal from "../components/RecipeSavedModal";
 import RecipeDetailsModal from "../components/RecipeDetailsModal";
+import AuthModal from "../components/AuthModal";
+import AISuggestModal from "../components/AISuggestModal";
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const defaultAvatar = "https://lh3.googleusercontent.com/aida-public/AB6AXuADBoucU7wCKnOfXrC3UYZHGLEJo-waF7NaNvPO-EPu1tq1zGzO6uT7NDzW8P1HWLoFvDEQW35vAZw0DoEnJekloQQW0iPf2GQ-LVXApe_pfvZbPPcgViKJu6EqPe9QcC6Q3Ea5nxUoQDmiy4tcZVkGuOVPeJghJl-xnFjW7cLO3QpuwCDYTgBypJ9EpWIn9Nz3bxJmmCHwAb7wrbJWWdq75QGzkxg1WNKZK704emNTHDNYhI3LzTcXBuWwvLZ-dyvOwozYdo33gw";
 
 export default function HomePage() {
     const {
@@ -16,15 +19,46 @@ export default function HomePage() {
         recipes,
         recentlyCooked,
         totalSaved,
-        addRecipe
+        addRecipe,
+        openAuthModal,
+        logout,
+        suggestMeal,
+        addToPlanner
     } = useRecipes();
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [newRecipeTitle, setNewRecipeTitle] = useState("");
     const [createdRecipeId, setCreatedRecipeId] = useState(null);
     const [detailsModalId, setDetailsModalId] = useState(null);
+    const [aiQuery, setAiQuery] = useState("");
+    const [aiSuggestion, setAiSuggestion] = useState(null);
+    const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+    const [isLoadingAI, setIsLoadingAI] = useState(false);
+    const [excludedIds, setExcludedIds] = useState([]);
 
-    const filledDays = planner.reduce((acc, item, index) => {
+    const handleSuggest = async () => {
+        if (!user) {
+            openAuthModal();
+            return;
+        }
+
+        if (!aiQuery.trim()) return;
+
+        setIsLoadingAI(true);
+
+        const result = await suggestMeal(aiQuery, excludedIds);
+
+        setIsLoadingAI(false);
+
+        if (result) {
+            setAiSuggestion(result);
+            setIsAiModalOpen(true);
+
+            setExcludedIds(prev => [...prev, result.recipeId]);
+        }
+    };
+
+    const filledDays = (planner || []).reduce((acc, item, index) => {
         if (item.recipeId && recipes[item.recipeId]) {
             const recipe = recipes[item.recipeId];
             acc[index] = {
@@ -58,8 +92,8 @@ export default function HomePage() {
                         You've saved {totalSaved} dishes so far.
                     </div>
 
-                    <button className="mp-profile-btn">
-                        <img src={user.avatar} />
+                    <button className="mp-profile-btn" onClick={openAuthModal}>
+                        <img src={user?.avatar || defaultAvatar} />
                     </button>
                 </div>
             </header>
@@ -84,12 +118,16 @@ export default function HomePage() {
                         <h2>What should we cook today?</h2>
 
                         <div className="mp-search-box">
-                            <input placeholder="Something quick and spicy..." />
-                            <button>
+                            <input
+                                placeholder="Something quick and spicy..."
+                                value={aiQuery}
+                                onChange={(e) => setAiQuery(e.target.value)}
+                            />
+                            <button onClick={handleSuggest} disabled={isLoadingAI}>
                                 <span className="material-symbols-outlined">
                                     auto_fix_high
                                 </span>
-                                Suggest a Dish
+                                {isLoadingAI ? "Thinking..." : "Suggest a Dish"}
                             </button>
                         </div>
                     </div>
@@ -105,15 +143,18 @@ export default function HomePage() {
                             onChange={(e) => setNewRecipeTitle(e.target.value)}
                         />
                         <button
-                            onClick={() => {
+                            onClick={async () => {
                                 if (!newRecipeTitle.trim()) return;
-
-                                const newId = addRecipe(newRecipeTitle);
+                                if (!user) {
+                                    openAuthModal();
+                                    return;
+                                }
+                                const newId = await addRecipe(newRecipeTitle);
 
                                 if (newId) {
                                     setCreatedRecipeId(newId);
                                     setShowModal(true);
-                                    setNewRecipeTitle(""); 
+                                    setNewRecipeTitle("");
                                 }
                             }}
                         >
@@ -164,7 +205,7 @@ export default function HomePage() {
                                     </span>
 
                                     <div className={`mp-day-box ${filledDays[i] ? "mp-day-filled" : ""}`} onClick={() =>
-                                        navigate(`/recipes?selectDate=${planner[i].date}`)
+                                        navigate(`/recipes?selectDate=${planner[i]?.date}`)
                                     }
                                         style={{ cursor: "pointer" }}>
                                         {filledDays[i] ? (
@@ -206,6 +247,25 @@ export default function HomePage() {
                     onClose={() => setDetailsModalId(null)}
                 />
             )}
+            <AISuggestModal
+                isOpen={isAiModalOpen}
+                suggestion={aiSuggestion}
+                onClose={() => {
+                    setIsAiModalOpen(false);
+                    setExcludedIds([]);
+                }}
+                onAssignToday={() => {
+                    const today = new Date().toISOString().split("T")[0];
+
+                    if (aiSuggestion?.recipeId) {
+                        addToPlanner(today, aiSuggestion.recipeId);
+                    }
+
+                    setIsAiModalOpen(false);
+                }}
+                onTryAgain={()=>handleSuggest(aiQuery)}
+            />
+            <AuthModal />
             <BottomNav />
 
         </div>

@@ -18,7 +18,7 @@ export default function App() {
                     <Route path="/planner" element={<PlannerPage />} />
                     <Route path="/recipes/:id" element={<RecipeDetailPage />} />
                     <Route path="/favorites" element={<FavoritesPage />} />
-                    <Route path="/recipes/add" element={<EditRecipePage />} />
+                    <Route path="/recipes/edit" element={<EditRecipePage />} />
                 </Routes>
             </Router>
         </RecipesProvider>

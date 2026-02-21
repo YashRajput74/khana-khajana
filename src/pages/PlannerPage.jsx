@@ -5,6 +5,7 @@ import { useRecipes } from "../context/RecipesContext";
 import { useNavigate } from "react-router-dom";
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const defaultAvatar= "https://lh3.googleusercontent.com/aida-public/AB6AXuADBoucU7wCKnOfXrC3UYZHGLEJo-waF7NaNvPO-EPu1tq1zGzO6uT7NDzW8P1HWLoFvDEQW35vAZw0DoEnJekloQQW0iPf2GQ-LVXApe_pfvZbPPcgViKJu6EqPe9QcC6Q3Ea5nxUoQDmiy4tcZVkGuOVPeJghJl-xnFjW7cLO3QpuwCDYTgBypJ9EpWIn9Nz3bxJmmCHwAb7wrbJWWdq75QGzkxg1WNKZK704emNTHDNYhI3LzTcXBuWwvLZ-dyvOwozYdo33gw";
 
 export default function PlannerPage() {
     const { planner, recipes, user } = useRecipes();
@@ -45,7 +46,7 @@ export default function PlannerPage() {
                 </div>
 
                 <div className="pp-avatar">
-                    <img src={user.avatar} alt={user.name} />
+                    <img src={user?.avatar || defaultAvatar} alt={user?.name} />
                 </div>
             </header>
 
@@ -57,7 +58,7 @@ export default function PlannerPage() {
                         <button>
                             <span className="material-symbols-outlined">chevron_left</span>
                         </button>
-                        <span>{plannerData[0].date} – {plannerData[plannerData.length - 1].date}</span>
+                        <span>{plannerData[0]?.date} – {plannerData[plannerData.length - 1]?.date}</span>
                         <button>
                             <span className="material-symbols-outlined">chevron_right</span>
                         </button>

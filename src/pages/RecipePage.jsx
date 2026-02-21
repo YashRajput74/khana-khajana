@@ -18,6 +18,8 @@ function getTimeAgo(dateString) {
     return `${Math.floor(diffDays / 30)} month${Math.floor(diffDays / 30) > 1 ? "s" : ""} ago`;
 }
 
+const defaultAvatar= "https://lh3.googleusercontent.com/aida-public/AB6AXuADBoucU7wCKnOfXrC3UYZHGLEJo-waF7NaNvPO-EPu1tq1zGzO6uT7NDzW8P1HWLoFvDEQW35vAZw0DoEnJekloQQW0iPf2GQ-LVXApe_pfvZbPPcgViKJu6EqPe9QcC6Q3Ea5nxUoQDmiy4tcZVkGuOVPeJghJl-xnFjW7cLO3QpuwCDYTgBypJ9EpWIn9Nz3bxJmmCHwAb7wrbJWWdq75QGzkxg1WNKZK704emNTHDNYhI3LzTcXBuWwvLZ-dyvOwozYdo33gw";
+
 export default function RecipesPage() {
     const {
         recipes,
@@ -101,7 +103,7 @@ export default function RecipesPage() {
                         <span className="material-symbols-outlined">settings</span>
                     </button>
                     <div className="rv-avatar">
-                        <img src={user.avatar} alt={user.name} />
+                        <img src={user?.avatar || defaultAvatar} alt={user?.name} />
                     </div>
                 </div>
             </header>
@@ -225,8 +227,10 @@ export default function RecipesPage() {
             {showAddModal && (
                 <AddRecipeModal
                     onClose={() => setShowAddModal(false)}
-                    onSave={(title) => {
-                        const newId = addRecipe(title);
+                    onSave={async (title) => {
+                        const newId = await addRecipe(title);
+                        if (!newId) return;
+
                         setCreatedRecipeId(newId);
                         setNewRecipeTitle(title);
                         setShowAddModal(false);

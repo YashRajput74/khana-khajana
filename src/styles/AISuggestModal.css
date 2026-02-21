@@ -1,0 +1,226 @@
+/* Backdrop */
+.mp-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 60;
+}
+
+/* Container */
+.mp-modal-container {
+    background-color: #fdfbf7;
+    max-width: 500px;
+    width: 100%;
+    border-radius: 2rem;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    animation: mp-fade-zoom 0.3s ease;
+}
+
+/* Header */
+.mp-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 2rem;
+}
+
+.mp-icon {
+    font-size: 1.5rem;
+    color: #4beb2b;
+}
+
+.mp-suggestion-label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #78716c;
+}
+
+/* Body */
+.mp-modal-body {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0 2rem 2rem 2rem;
+}
+
+.mp-modal-image-wrapper {
+    flex-shrink: 0;
+    width: 112px;
+    height: 112px;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+
+.mp-modal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mp-modal-info {
+    flex-grow: 1;
+}
+
+.mp-badge {
+    display: inline-block;
+    background-color: #d1fae5;
+    color: #065f46;
+    font-size: 0.625rem;
+    font-weight: 700;
+    border-radius: 0.375rem;
+    padding: 0.125rem 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.mp-modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1c1917;
+}
+
+.mp-modal-description {
+    font-size: 0.875rem;
+    color: #78716c;
+}
+
+/* Footer */
+.mp-modal-footer {
+    border-top: 1px solid #e7e5e4;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mp-ai-refine {
+    text-align: center;
+}
+
+.mp-refine-label {
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #a8a29e;
+    margin-bottom: 1.5rem;
+}
+
+.mp-mic-button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.mp-mic-button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #4beb2b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1c1917;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    animation: mp-pulse-green 2s infinite;
+    border: none;
+    cursor: pointer;
+}
+
+.mp-input-wrapper {
+    position: relative;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.mp-text-input {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid #e7e5e4;
+    font-size: 0.875rem;
+    outline: none;
+}
+
+.mp-send-button {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #4beb2b;
+    cursor: pointer;
+}
+
+/* Action buttons */
+.mp-action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.mp-assign-button {
+    background-color: #4beb2b;
+    color: #1c1917;
+    font-weight: 700;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.mp-assign-button:active {
+    transform: scale(0.98);
+}
+
+.mp-try-button {
+    background-color: transparent;
+    border: 2px solid #e7e5e4;
+    color: #57534e;
+    font-weight: 600;
+    padding: 0.875rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+/* Animations */
+@keyframes mp-fade-zoom {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes mp-pulse-green {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(75, 235, 43, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px rgba(75, 235, 43, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(75, 235, 43, 0);
+    }
+}

@@ -4,6 +4,8 @@ import { APP_NAME } from "../config/appconfig";
 import { useRecipes } from "../context/RecipesContext";
 import { useNavigate } from "react-router-dom";
 
+const defaultAvatar = "https://lh3.googleusercontent.com/aida-public/AB6AXuADBoucU7wCKnOfXrC3UYZHGLEJo-waF7NaNvPO-EPu1tq1zGzO6uT7NDzW8P1HWLoFvDEQW35vAZw0DoEnJekloQQW0iPf2GQ-LVXApe_pfvZbPPcgViKJu6EqPe9QcC6Q3Ea5nxUoQDmiy4tcZVkGuOVPeJghJl-xnFjW7cLO3QpuwCDYTgBypJ9EpWIn9Nz3bxJmmCHwAb7wrbJWWdq75QGzkxg1WNKZK704emNTHDNYhI3LzTcXBuWwvLZ-dyvOwozYdo33gw";
+
 function formatLastCooked(lastCookedAt) {
     if (!lastCookedAt) return "Never cooked";
 
@@ -44,7 +46,7 @@ export default function FavoritesPage() {
 
                     <div
                         className="fp-avatar"
-                        style={{ backgroundImage: `url(${user.avatar})` }}
+                        style={{ backgroundImage: `url(${user?.avatar || defaultAvatar})` }}
                     ></div>
                 </div>
             </header>
