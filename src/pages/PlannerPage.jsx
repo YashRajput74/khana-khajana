@@ -3,12 +3,15 @@ import BottomNav from "../components/BottomNav";
 import { APP_NAME } from "../config/appconfig";
 import { useRecipes } from "../context/RecipesContext";
 import { useNavigate } from "react-router-dom";
+import ProfileModal from "../components/ProfileModal";
+import { useState } from "react";
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const defaultAvatar= "https://lh3.googleusercontent.com/aida-public/AB6AXuADBoucU7wCKnOfXrC3UYZHGLEJo-waF7NaNvPO-EPu1tq1zGzO6uT7NDzW8P1HWLoFvDEQW35vAZw0DoEnJekloQQW0iPf2GQ-LVXApe_pfvZbPPcgViKJu6EqPe9QcC6Q3Ea5nxUoQDmiy4tcZVkGuOVPeJghJl-xnFjW7cLO3QpuwCDYTgBypJ9EpWIn9Nz3bxJmmCHwAb7wrbJWWdq75QGzkxg1WNKZK704emNTHDNYhI3LzTcXBuWwvLZ-dyvOwozYdo33gw";
+const defaultAvatar = "https://lh3.googleusercontent.com/aida-public/AB6AXuADBoucU7wCKnOfXrC3UYZHGLEJo-waF7NaNvPO-EPu1tq1zGzO6uT7NDzW8P1HWLoFvDEQW35vAZw0DoEnJekloQQW0iPf2GQ-LVXApe_pfvZbPPcgViKJu6EqPe9QcC6Q3Ea5nxUoQDmiy4tcZVkGuOVPeJghJl-xnFjW7cLO3QpuwCDYTgBypJ9EpWIn9Nz3bxJmmCHwAb7wrbJWWdq75QGzkxg1WNKZK704emNTHDNYhI3LzTcXBuWwvLZ-dyvOwozYdo33gw";
 
 export default function PlannerPage() {
     const { planner, recipes, user } = useRecipes();
+    const [showProfile, setShowProfile] = useState(false);
     const navigate = useNavigate();
 
     const plannerData = planner.map((item, index) => {
@@ -45,7 +48,8 @@ export default function PlannerPage() {
                     <span>{APP_NAME}</span>
                 </div>
 
-                <div className="pp-avatar">
+                <div className="pp-avatar" onClick={() => setShowProfile(true)}
+                    style={{ cursor: "pointer" }}>
                     <img src={user?.avatar || defaultAvatar} alt={user?.name} />
                 </div>
             </header>
@@ -96,7 +100,7 @@ export default function PlannerPage() {
                                         </div>
                                     </div>
 
-                                    <button className="pp-edit-btn" onClick={()=>navigate(`/recipes?selectDate=${planner[index].date}`)}>
+                                    <button className="pp-edit-btn" onClick={() => navigate(`/recipes?selectDate=${planner[index].date}`)}>
                                         <span className="material-symbols-outlined">edit</span>
                                     </button>
                                 </div>
@@ -114,7 +118,9 @@ export default function PlannerPage() {
                     ))}
                 </div>
             </main>
-
+            {showProfile && (
+                <ProfileModal onClose={() => setShowProfile(false)} />
+            )}
             <BottomNav />
         </div>
     );

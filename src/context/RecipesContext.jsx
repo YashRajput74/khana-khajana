@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useMemo, useEffect } from "react";
-import { mockRecipes, mockPlanner, mockUser } from "../data/mockData";
 import { supabase } from "../lib/supabase";
 
 const RecipesContext = createContext();
@@ -9,9 +8,6 @@ export function RecipesProvider({ children }) {
     const [recipes, setRecipes] = useState({});
     const [planner, setPlanner] = useState([]);
     const [user, setUser] = useState();
-    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-    const openAuthModal = () => setIsAuthModalOpen(true);
-    const closeAuthModal = () => setIsAuthModalOpen(false);
 
     useEffect(() => {
         const getSession = async () => {
@@ -33,12 +29,6 @@ export function RecipesProvider({ children }) {
             listener.subscription.unsubscribe();
         };
     }, []);
-
-    useEffect(() => {
-        if (authLoaded && !user) {
-            setIsAuthModalOpen(true);
-        }
-    }, [authLoaded, user]);
 
     useEffect(() => {
         if (!user) return;
@@ -105,7 +95,6 @@ export function RecipesProvider({ children }) {
         }
 
         setUser(data.user);
-        closeAuthModal();
     };
 
     const signup = async (email, password) => {
@@ -120,7 +109,6 @@ export function RecipesProvider({ children }) {
         }
 
         setUser(data.user);
-        closeAuthModal();
     };
 
     const fetchWithAuth = async (url, options = {}) => {
@@ -353,6 +341,7 @@ export function RecipesProvider({ children }) {
     return (
         <RecipesContext.Provider
             value={{
+                authLoaded,
                 recipes,
                 recipesArray,
                 planner,
@@ -369,9 +358,6 @@ export function RecipesProvider({ children }) {
                 login,
                 signup,
                 logout,
-                isAuthModalOpen,
-                openAuthModal,
-                closeAuthModal,
                 suggestMeal
             }}
         >

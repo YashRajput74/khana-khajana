@@ -1,0 +1,133 @@
+/* Overlay */
+.delete_overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+}
+
+/* Modal */
+.delete_modal {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px 32px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    animation: zoomIn 0.2s ease;
+    overflow: hidden;
+}
+
+/* Accent line */
+.delete_topAccent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(to right,
+            transparent,
+            rgba(255, 0, 0, 0.3),
+            transparent);
+}
+
+/* Content */
+.delete_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.delete_icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(214, 95, 95, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d65f5f;
+    margin-bottom: 16px;
+}
+
+.delete_icon .material-symbols-outlined {
+    font-size: 32px;
+}
+
+.delete_text h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.delete_text p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 360px;
+}
+
+.delete_actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-top: 24px;
+}
+
+.delete_cancel,
+.delete_confirm {
+    flex: 1;
+    height: 48px;
+    border-radius: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.delete_cancel {
+    background: #f2f2f2;
+}
+
+.delete_cancel:hover {
+    background: #e6e6e6;
+}
+
+.delete_confirm {
+    background: #d65f5f;
+    color: white;
+}
+
+.delete_confirm:hover {
+    background: #c94e4e;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

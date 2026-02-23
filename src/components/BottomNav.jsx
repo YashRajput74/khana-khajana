@@ -18,11 +18,6 @@ export default function BottomNav() {
                     Planner
                 </NavLink>
 
-                <NavLink to="/favorites" className="mp-dock-item mp-dock-icon">
-                    Favorites
-                </NavLink>
-
-
             </nav>
         </div>
     );

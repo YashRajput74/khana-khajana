@@ -3,10 +3,12 @@ import { APP_NAME } from "../config/appconfig";
 import "../styles/RecipePage.css";
 import { useRecipes } from "../context/RecipesContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import RecipeSavedModal from "../components/RecipeSavedModal";
 import RecipeDetailsModal from "../components/RecipeDetailsModal";
 import AddRecipeModal from "../components/AddRecipeModal";
+import ProfileModal from "../components/ProfileModal";
+import DeleteRecipeModal from "../components/DeleteRecipeModal";
 
 function getTimeAgo(dateString) {
     const diffMs = new Date() - new Date(dateString);
@@ -18,11 +20,12 @@ function getTimeAgo(dateString) {
     return `${Math.floor(diffDays / 30)} month${Math.floor(diffDays / 30) > 1 ? "s" : ""} ago`;
 }
 
-const defaultAvatar= "https://lh3.googleusercontent.com/aida-public/AB6AXuADBoucU7wCKnOfXrC3UYZHGLEJo-waF7NaNvPO-EPu1tq1zGzO6uT7NDzW8P1HWLoFvDEQW35vAZw0DoEnJekloQQW0iPf2GQ-LVXApe_pfvZbPPcgViKJu6EqPe9QcC6Q3Ea5nxUoQDmiy4tcZVkGuOVPeJghJl-xnFjW7cLO3QpuwCDYTgBypJ9EpWIn9Nz3bxJmmCHwAb7wrbJWWdq75QGzkxg1WNKZK704emNTHDNYhI3LzTcXBuWwvLZ-dyvOwozYdo33gw";
+const defaultAvatar = "https://lh3.googleusercontent.com/aida-public/AB6AXuADBoucU7wCKnOfXrC3UYZHGLEJo-waF7NaNvPO-EPu1tq1zGzO6uT7NDzW8P1HWLoFvDEQW35vAZw0DoEnJekloQQW0iPf2GQ-LVXApe_pfvZbPPcgViKJu6EqPe9QcC6Q3Ea5nxUoQDmiy4tcZVkGuOVPeJghJl-xnFjW7cLO3QpuwCDYTgBypJ9EpWIn9Nz3bxJmmCHwAb7wrbJWWdq75QGzkxg1WNKZK704emNTHDNYhI3LzTcXBuWwvLZ-dyvOwozYdo33gw";
 
 export default function RecipesPage() {
     const {
         recipes,
+        deleteRecipe,
         recipesArray,
         toggleFavorite,
         user,
@@ -37,13 +40,15 @@ export default function RecipesPage() {
     const [searchTerm, setSearchTerm] = useState("");
     const selectedDate = searchParams.get("selectDate");
     const { addRecipe } = useRecipes();
-
+    const [showProfile, setShowProfile] = useState(false);
     const [showSavedModal, setShowSavedModal] = useState(false);
     const [detailsModalId, setDetailsModalId] = useState(null);
     const [newRecipeTitle, setNewRecipeTitle] = useState("");
     const [createdRecipeId, setCreatedRecipeId] = useState(null);
     const [showAddModal, setShowAddModal] = useState(false);
-
+    const [openMenuId, setOpenMenuId] = useState(null);
+    const searchInputRef = useRef(null);
+    const [deleteTarget, setDeleteTarget] = useState(null);
     const handleAddToPlanner = (recipeId) => {
         const existingDay = planner.find(day => day.date === selectedDate);
         if (!existingDay) return;
@@ -102,8 +107,12 @@ export default function RecipesPage() {
                     <button className="rv-icon-btn">
                         <span className="material-symbols-outlined">settings</span>
                     </button>
-                    <div className="rv-avatar">
-                        <img src={user?.avatar || defaultAvatar} alt={user?.name} />
+                    <div
+                        className="rv-avatar"
+                        onClick={() => setShowProfile(true)}
+                        style={{ cursor: "pointer" }}
+                    >
+                        <img src={user.avatar || defaultAvatar} alt={user.email} />
                     </div>
                 </div>
             </header>
@@ -113,9 +122,10 @@ export default function RecipesPage() {
                 <p className="rv-subtitle">Rediscover your culinary journey.</p>
 
                 {/* SEARCH */}
-                <div className="rv-search">
+                <div className="rv-search" onClick={() => searchInputRef.current?.focus()}>
                     <span className="material-symbols-outlined">search</span>
                     <input
+                        ref={searchInputRef}
                         placeholder="Search dishes or tags..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -157,18 +167,20 @@ export default function RecipesPage() {
                         </div>
                     ) : (
                         filteredRecipes.map((item) => (
-                            <article key={item.id} className="rv-card">
+                            <article key={item.id}
+                                className="rv-card"
+                                onClick={() => {
+                                    if (selectedDate) {
+                                        handleAddToPlanner(item.id);
+                                    } else {
+                                        navigate(`/recipes/${item.id}`);
+                                    }
+                                }}
+                                style={{ cursor: "pointer" }} >
 
                                 <div
                                     className="rv-card-left"
-                                    onClick={() => {
-                                        if (selectedDate) {
-                                            handleAddToPlanner(item.id);
-                                        } else {
-                                            navigate(`/recipes/${item.id}`);
-                                        }
-                                    }}
-                                    style={{ cursor: "pointer" }}
+
                                 >
                                     <div className="rv-card-img">
                                         {item.image ? (
@@ -198,18 +210,46 @@ export default function RecipesPage() {
                                 <div className="rv-card-actions">
                                     <button
                                         className={`rv-fav-btn ${item.isFavorite ? "active" : ""}`}
-                                        onClick={() => toggleFavorite(item.id)}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleFavorite(item.id);
+                                        }}
                                     >
                                         <span className="material-symbols-outlined">
                                             {item.isFavorite ? "star" : "star_outline"}
                                         </span>
                                     </button>
 
-                                    <button>
-                                        <span className="material-symbols-outlined">
-                                            more_vert
-                                        </span>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setOpenMenuId(prev => prev === item.id ? null : item.id);
+                                        }}
+                                    >
+                                        <span className="material-symbols-outlined">more_vert</span>
                                     </button>
+                                    {openMenuId === item.id && (
+                                        <div className="rv-dropdown">
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    navigate(`/recipes/edit?id=${item.id}`);
+                                                }}
+                                            >
+                                                Edit
+                                            </button>
+
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setDeleteTarget(item);
+                                                    setOpenMenuId(null);
+                                                }}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </article>
                         ))
@@ -256,7 +296,19 @@ export default function RecipesPage() {
                     onClose={() => setDetailsModalId(null)}
                 />
             )}
-
+            {showProfile && (
+                <ProfileModal onClose={() => setShowProfile(false)} />
+            )}
+            {deleteTarget && (
+                <DeleteRecipeModal
+                    recipeTitle={deleteTarget.title}
+                    onCancel={() => setDeleteTarget(null)}
+                    onConfirm={() => {
+                        deleteRecipe(deleteTarget.id);
+                        setDeleteTarget(null);
+                    }}
+                />
+            )}
             <BottomNav />
         </div>
     );

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import RecipeSavedModal from "../components/RecipeSavedModal";
 import RecipeDetailsModal from "../components/RecipeDetailsModal";
-import AuthModal from "../components/AuthModal";
+import ProfileModal from "../components/ProfileModal";
 import AISuggestModal from "../components/AISuggestModal";
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -20,8 +20,6 @@ export default function HomePage() {
         recentlyCooked,
         totalSaved,
         addRecipe,
-        openAuthModal,
-        logout,
         suggestMeal,
         addToPlanner
     } = useRecipes();
@@ -35,12 +33,9 @@ export default function HomePage() {
     const [isAiModalOpen, setIsAiModalOpen] = useState(false);
     const [isLoadingAI, setIsLoadingAI] = useState(false);
     const [excludedIds, setExcludedIds] = useState([]);
+    const [showProfile, setShowProfile] = useState(false);
 
     const handleSuggest = async () => {
-        if (!user) {
-            openAuthModal();
-            return;
-        }
 
         if (!aiQuery.trim()) return;
 
@@ -92,7 +87,7 @@ export default function HomePage() {
                         You've saved {totalSaved} dishes so far.
                     </div>
 
-                    <button className="mp-profile-btn" onClick={openAuthModal}>
+                    <button className="mp-profile-btn" onClick={() => setShowProfile(true)}>
                         <img src={user?.avatar || defaultAvatar} />
                     </button>
                 </div>
@@ -263,9 +258,11 @@ export default function HomePage() {
 
                     setIsAiModalOpen(false);
                 }}
-                onTryAgain={()=>handleSuggest(aiQuery)}
+                onTryAgain={() => handleSuggest(aiQuery)}
             />
-            <AuthModal />
+            {showProfile && (
+                <ProfileModal onClose={() => setShowProfile(false)} />
+            )}
             <BottomNav />
 
         </div>
