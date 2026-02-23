@@ -4,9 +4,23 @@ import HomePage from "./pages/HomePage";
 import RecipePage from "./pages/RecipePage";
 import PlannerPage from "./pages/PlannerPage";
 import RecipeDetailPage from "./pages/RecipeDetailPage";
-import EditRecipePage from "./pages/EditRecipePage";
 import LoginPage from "./pages/LoginPage";
 import { RecipesProvider, useRecipes } from "./context/RecipesContext";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+function ScrollToTop() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [pathname]);
+
+    return null;
+}
 
 function AppRoutes() {
     const { user, authLoaded } = useRecipes();
@@ -46,12 +60,7 @@ function AppRoutes() {
                     user ? <RecipeDetailPage /> : <Navigate to="/login" replace />
                 }
             />
-            <Route
-                path="/recipes/edit"
-                element={
-                    user ? <EditRecipePage /> : <Navigate to="/login" replace />
-                }
-            />
+            
         </Routes>
     );
 }
@@ -60,6 +69,7 @@ export default function App() {
     return (
         <RecipesProvider>
             <Router>
+                <ScrollToTop />
                 <AppRoutes />
             </Router>
         </RecipesProvider>

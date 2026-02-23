@@ -74,8 +74,23 @@
 .rd-image-wrapper {
     border-radius: 24px;
     overflow: hidden;
-    width: 300px;
+    width: 100%;
+    max-width: 400px;
     margin: 30px auto;
+    text-align: center;
+}
+
+.rd-image-input {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+.rd-image-input:focus {
+    border-color: #4beb2b;
 }
 
 .rd-image-wrapper img {
@@ -86,6 +101,10 @@
 
 .rd-image-wrapper:hover img {
     transform: scale(1.05);
+}
+
+.rd-page.editing .rd-image-wrapper:hover img {
+    transform: none;
 }
 
 /* TAGS */
@@ -202,4 +221,94 @@
 .rd-share-btn:hover {
     background: #4beb2b;
     color: white;
+}
+
+/* HEADER ACTIONS */
+.rd-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.rd-favorite,
+.rd-edit,
+.rd-cancel,
+.rd-save {
+    background: none;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.rd-favorite {
+    color: #f4b400;
+}
+
+.rd-edit {
+    color: #4beb2b;
+}
+
+.rd-cancel {
+    color: #888;
+}
+
+.rd-save {
+    background: #4beb2b;
+    padding: 8px 16px;
+    border-radius: 999px;
+    color: #0a2605;
+}
+
+.rd-save:hover {
+    background: #3bd622;
+}
+
+.rd-title-input {
+    font-size: 36px;
+    font-weight: 900;
+    border: none;
+    border-bottom: 2px solid #4beb2b;
+    text-align: center;
+    width: 100%;
+    outline: none;
+    background: transparent;
+    margin-bottom: 10px;
+}
+
+.rd-steps-textarea {
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid #e5e9e4;
+    padding: 20px;
+    font-family: "Merriweather", serif;
+    font-size: 18px;
+    line-height: 1.6;
+    resize: vertical;
+    outline: none;
+}
+
+.rd-steps-textarea:focus {
+    border-color: #4beb2b;
+    box-shadow: 0 0 0 3px rgba(75, 235, 43, 0.15);
+}
+
+.rd-tag.editable {
+    background: #eaf9e6;
+    border: 1px solid #4beb2b;
+}
+
+.rd-tag.editable button {
+    border: none;
+    background: none;
+    font-size: 14px;
+    cursor: pointer;
+    color: #333;
+}
+
+.rd-tag-input {
+    border: 1px dashed #4beb2b;
+    padding: 6px 12px;
+    border-radius: 999px;
+    outline: none;
+    font-size: 14px;
 }
