@@ -50,8 +50,7 @@ export default function RecipesPage() {
     const searchInputRef = useRef(null);
     const [deleteTarget, setDeleteTarget] = useState(null);
     const handleAddToPlanner = (recipeId) => {
-        const existingDay = planner.find(day => day.date === selectedDate);
-        if (!existingDay) return;
+        if (!selectedDate) return;
 
         addToPlanner(selectedDate, recipeId);
         navigate("/planner");

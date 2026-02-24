@@ -9,7 +9,6 @@ import RecipeDetailsModal from "../components/RecipeDetailsModal";
 import ProfileModal from "../components/ProfileModal";
 import AISuggestModal from "../components/AISuggestModal";
 
-const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const defaultAvatar = "https://lh3.googleusercontent.com/aida-public/AB6AXuADBoucU7wCKnOfXrC3UYZHGLEJo-waF7NaNvPO-EPu1tq1zGzO6uT7NDzW8P1HWLoFvDEQW35vAZw0DoEnJekloQQW0iPf2GQ-LVXApe_pfvZbPPcgViKJu6EqPe9QcC6Q3Ea5nxUoQDmiy4tcZVkGuOVPeJghJl-xnFjW7cLO3QpuwCDYTgBypJ9EpWIn9Nz3bxJmmCHwAb7wrbJWWdq75QGzkxg1WNKZK704emNTHDNYhI3LzTcXBuWwvLZ-dyvOwozYdo33gw";
 
 export default function HomePage() {
@@ -53,16 +52,33 @@ export default function HomePage() {
         }
     };
 
-    const filledDays = (planner || []).reduce((acc, item, index) => {
-        if (item.recipeId && recipes[item.recipeId]) {
-            const recipe = recipes[item.recipeId];
-            acc[index] = {
-                image: recipe.image || null,
-                label: recipe.title
-            };
-        }
-        return acc;
-    }, {});
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const weekData = Array.from({ length: 7 }).map((_, index) => {
+        const dateObj = new Date(today);
+        dateObj.setDate(today.getDate() + index);
+
+        const isoDate = dateObj.toISOString().split("T")[0];
+
+        const plannerItem = planner.find(p => p.date === isoDate);
+        const recipe = plannerItem?.recipeId
+            ? recipes[plannerItem.recipeId]
+            : null;
+
+        return {
+            day: dateObj.toLocaleDateString("en-US", { weekday: "short" }),
+            isoDate,
+            isToday: index === 0,
+            meal: recipe
+                ? {
+                    id: plannerItem.recipeId,
+                    title: recipe.title,
+                    image: recipe.image || null
+                }
+                : null
+        };
+    });
 
     const hour = new Date().getHours();
     let greeting = "Good Evening";
@@ -193,22 +209,25 @@ export default function HomePage() {
                         </div>
 
                         <div className="mp-week-grid">
-                            {daysOfWeek.map((day, i) => (
+                            {weekData.map((item, i) => (
                                 <div key={i} className="mp-day">
-                                    <span className={i === 1 ? "mp-day-active" : ""}>
-                                        {day}
+                                    <span className={item.isToday ? "mp-day-active" : ""}>
+                                        {item.day}
                                     </span>
 
-                                    <div className={`mp-day-box ${filledDays[i] ? "mp-day-filled" : ""}`} onClick={() =>
-                                        navigate(`/recipes?selectDate=${planner[i]?.date}`)
-                                    }
-                                        style={{ cursor: "pointer" }}>
-                                        {filledDays[i] ? (
+                                    <div
+                                        className={`mp-day-box ${item.meal ? "mp-day-filled" : ""}`}
+                                        onClick={() => navigate(`/recipes?selectDate=${item.isoDate}`)}
+                                        style={{ cursor: "pointer" }}
+                                    >
+                                        {item.meal ? (
                                             <>
-                                                <img src={filledDays[i].image} alt="" />
-                                                {filledDays[i].label && (
-                                                    <span className="mp-day-label">{filledDays[i].label}</span>
+                                                {item.meal.image && (
+                                                    <img src={item.meal.image} alt="" />
                                                 )}
+                                                <span className="mp-day-label">
+                                                    {item.meal.title}
+                                                </span>
                                             </>
                                         ) : (
                                             <span className="material-symbols-outlined">add</span>
