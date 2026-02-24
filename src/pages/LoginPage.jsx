@@ -7,7 +7,8 @@ const LoginPage = () => {
         login,
         signup,
         logout,
-        user
+        user,
+        loginWithGoogle
     } = useRecipes();
 
     const [isSignup, setIsSignup] = useState(false);
@@ -139,7 +140,7 @@ const LoginPage = () => {
                         <span>or continue with</span>
                     </div>
 
-                    <button className="prp-google-btn">
+                    <button className="prp-google-btn" onClick={loginWithGoogle}>
                         Continue with Google
                     </button>
 

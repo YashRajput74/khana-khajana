@@ -33,21 +33,48 @@ export default function HomePage() {
     const [isLoadingAI, setIsLoadingAI] = useState(false);
     const [excludedIds, setExcludedIds] = useState([]);
     const [showProfile, setShowProfile] = useState(false);
+    const [isListening, setIsListening] = useState(false);
 
-    const handleSuggest = async () => {
+    const startListening = () => {
+        if (!("webkitSpeechRecognition" in window)) {
+            alert("Speech recognition not supported in this browser.");
+            return;
+        }
 
-        if (!aiQuery.trim()) return;
+        const recognition = new window.webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = "en-IN";
+
+        recognition.onstart = () => {
+            setIsListening(true);
+        };
+
+        recognition.onend = () => {
+            setIsListening(false);
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            setAiQuery(transcript);
+        };
+
+        recognition.start();
+    };
+
+    const handleSuggest = async (query) => {
+        const finalQuery = query || aiQuery;
+        if (!finalQuery.trim()) return;
 
         setIsLoadingAI(true);
 
-        const result = await suggestMeal(aiQuery, excludedIds);
+        const result = await suggestMeal(finalQuery, excludedIds);
 
         setIsLoadingAI(false);
 
         if (result) {
             setAiSuggestion(result);
             setIsAiModalOpen(true);
-
             setExcludedIds(prev => [...prev, result.recipeId]);
         }
     };
@@ -134,7 +161,16 @@ export default function HomePage() {
                                 value={aiQuery}
                                 onChange={(e) => setAiQuery(e.target.value)}
                             />
-                            <button onClick={handleSuggest} disabled={isLoadingAI}>
+
+                            <button
+                                type="button"
+                                onClick={startListening}
+                                className={isListening ? "listening" : ""}
+                            >
+                                <span className="material-symbols-outlined text-2xl">mic</span>
+                            </button>
+
+                            <button onClick={()=>handleSuggest()} disabled={isLoadingAI}>
                                 <span className="material-symbols-outlined">
                                     auto_fix_high
                                 </span>
@@ -277,7 +313,7 @@ export default function HomePage() {
 
                     setIsAiModalOpen(false);
                 }}
-                onTryAgain={() => handleSuggest(aiQuery)}
+                onTryAgain={(refinedQuery) => handleSuggest(refinedQuery)}
             />
             {showProfile && (
                 <ProfileModal onClose={() => setShowProfile(false)} />

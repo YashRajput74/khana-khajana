@@ -83,6 +83,19 @@ export function RecipesProvider({ children }) {
         loadPlanner();
     }, [user]);
 
+    const loginWithGoogle = async () => {
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: "google",
+            options: {
+                redirectTo: window.location.origin
+            }
+        });
+
+        if (error) {
+            console.error("Google login error:", error.message);
+        }
+    };
+
     const login = async (email, password) => {
         const { data, error } = await supabase.auth.signInWithPassword({
             email,
@@ -358,7 +371,8 @@ export function RecipesProvider({ children }) {
                 login,
                 signup,
                 logout,
-                suggestMeal
+                suggestMeal,
+                loginWithGoogle
             }}
         >
             {children}

@@ -100,12 +100,6 @@ export default function RecipesPage() {
                 </div>
 
                 <div className="rv-header-right">
-                    <button className="rv-icon-btn">
-                        <span className="material-symbols-outlined">notifications</span>
-                    </button>
-                    <button className="rv-icon-btn">
-                        <span className="material-symbols-outlined">settings</span>
-                    </button>
                     <div
                         className="rv-avatar"
                         onClick={() => setShowProfile(true)}
