@@ -1,4 +1,28 @@
-*{
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #D4AF37;
+    --color-primary-dark: #C5A028;
+    --color-primary-light: #E5C565;
+
+    --color-background-dark: #0A0A0A;
+    --color-background-light: #F9FAFB;
+
+    --color-surface-dark: #171717;
+    --color-surface-light: #FFFFFF;
+
+    --color-text-secondary-dark: #A3A3A3;
+    --color-text-secondary-light: #525252;
+
+    --font-sans: "Inter", sans-serif;
+}
+
+/* Enable dark mode */
+:root {
+    color-scheme: dark;
+}
+
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
