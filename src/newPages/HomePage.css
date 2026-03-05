@@ -1,0 +1,132 @@
+.kh-home {
+    min-height: 100vh;
+    background: #0A0A0A;
+    color: white;
+    font-family: Inter, sans-serif;
+}
+
+.kh-home-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 10, 0.9);
+    backdrop-filter: blur(10px);
+}
+
+.kh-home-logo {
+    color: #D4AF37;
+    font-weight: 700;
+}
+
+.kh-home-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #555;
+}
+
+.kh-home-hero {
+    text-align: center;
+    padding-top: 120px;
+    padding-bottom: 40px;
+    font-size: 24px;
+
+}
+
+.kh-home-mic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #171717;
+    border: 1px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    font-size: 40px;
+    color: #D4AF37;
+}
+
+.kh-home-listening {
+    color: #E5C565;
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+.kh-home-hint {
+    color: #888;
+    font-size: 24px;
+}
+
+.kh-home-edit {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background: #222;
+    border-radius: 20px;
+    border: none;
+    font-size: 18px;
+}
+
+.kh-home-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.kh-home-tabs span {
+    color: #888;
+    cursor: pointer;
+}
+
+.kh-home-tabs .active {
+    color: white;
+    border-bottom: 2px solid #D4AF37;
+}
+
+.kh-home-grid {
+    column-count: 4;
+    column-gap: 16px;
+    padding: 20px;
+}
+
+.kh-home-card {
+    position: relative;
+    margin-bottom: 16px;
+    border-radius: 16px;
+    overflow: hidden;
+    break-inside: avoid;
+}
+
+.kh-home-card img {
+    width: 100%;
+}
+
+.kh-home-overlay {
+    position: absolute;
+    bottom: 0;
+    padding: 16px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.kh-home-overlay p {
+    font-size: 12px;
+    color: #bbb;
+}
+
+.kh-home-add {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #171717;
+    border: 1px solid #D4AF37;
+    color: #D4AF37;
+    font-size: 28px;
+}

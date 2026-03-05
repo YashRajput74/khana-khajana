@@ -1,0 +1,166 @@
+.recipe-page {
+    background: #121212;
+    color: #f3f3f3;
+    min-height: 100vh;
+    font-family: Inter, sans-serif;
+}
+
+/* container */
+
+.recipe-page-main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px;
+}
+
+/* header */
+
+.recipe-page-header {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recipe-page-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.recipe-page-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+
+/* hero */
+
+.recipe-page-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+/* image constraint */
+
+.recipe-page-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 22px;
+}
+
+.recipe-page-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* info */
+
+.recipe-page-info h1 {
+    font-size: 40px;
+}
+
+.recipe-page-desc {
+    color: #9ca3af;
+    margin: 10px 0 25px;
+}
+
+.recipe-page-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.recipe-page-cook {
+    background: #E5C875;
+    color: #1f2937;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 16px;
+    font-weight: 700;
+}
+
+.recipe-page-edit {
+    border: 1px solid #444;
+    background: none;
+    color: #ddd;
+    padding: 14px 22px;
+    border-radius: 16px;
+}
+
+/* grid */
+
+.recipe-page-grid {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    gap: 40px;
+}
+
+/* stats */
+
+.recipe-page-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.recipe-page-stats div {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.recipe-page-stats .full {
+    grid-column: span 2;
+}
+
+/* ingredients */
+
+.recipe-page-ingredients ul {
+    margin-top: 15px;
+    line-height: 2;
+}
+
+.recipe-page-ingredients .qty {
+    color: #E5C875;
+    font-weight: 600;
+}
+
+/* steps */
+
+.recipe-page-step {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.recipe-page-step-num {
+    width: 60px;
+    height: 32px;
+    background: #E5C875;
+    color: #1f2937;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+/* journal */
+
+.recipe-page-journal {
+    margin-top: 40px;
+}
+
+.recipe-page-note {
+    background: #1e1e1e;
+    padding: 18px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+}

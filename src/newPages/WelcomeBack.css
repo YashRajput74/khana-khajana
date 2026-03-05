@@ -1,0 +1,205 @@
+.kk-auth {
+    min-height: 100vh;
+    background: #0A0A0A;
+    color: white;
+    font-family: Inter, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER */
+
+.kk-auth-header {
+    padding: 32px 0 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.kk-auth-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.kk-auth-logo-icon {
+    color: #D4AF37;
+    font-size: 26px;
+}
+
+.kk-auth-logo-text {
+    color: #D4AF37;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+/* MAIN */
+
+.kk-auth-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* CARD */
+
+.kk-auth-card {
+    width: 420px;
+    background: #171717;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+}
+
+.kk-auth-glow {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 50%;
+    top: -40px;
+    right: -40px;
+    filter: blur(50px);
+}
+
+/* TITLE */
+
+.kk-auth-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.kk-auth-title h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.kk-auth-title p {
+    color: #A3A3A3;
+    font-size: 14px;
+}
+
+/* GOOGLE BUTTON */
+
+.kk-auth-google-btn {
+    width: 100%;
+    height: 48px;
+    background: white;
+    color: black;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.kk-auth-google-btn:hover {
+    background: #f2f2f2;
+}
+
+.kk-auth-google-icon {
+    width: 20px;
+}
+
+/* DIVIDER */
+
+.kk-auth-divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.kk-auth-divider::before,
+.kk-auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.kk-auth-divider span {
+    margin: 0 10px;
+    font-size: 12px;
+    color: #888;
+}
+
+/* INPUT */
+
+.kk-auth-input-wrapper {
+    position: relative;
+}
+
+.kk-auth-input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.kk-auth-input {
+    width: 100%;
+    background: #0A0A0A;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px 12px 12px 40px;
+    color: white;
+}
+
+.kk-auth-input:focus {
+    outline: none;
+    border-color: #D4AF37;
+}
+
+/* EMAIL BUTTON */
+
+.kk-auth-email-btn {
+    width: 100%;
+    height: 48px;
+    margin-top: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.kk-auth-email-btn:hover {
+    border-color: #D4AF37;
+    color: #D4AF37;
+}
+
+/* BOTTOM */
+
+.kk-auth-bottom {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.kk-auth-start-btn {
+    background: none;
+    border: none;
+    color: #A3A3A3;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.kk-auth-start-btn span {
+    color: #D4AF37;
+    font-weight: 500;
+}
+
+/* FOOTER */
+
+.kk-auth-footer {
+    text-align: center;
+    font-size: 12px;
+    color: #555;
+    padding: 20px;
+}

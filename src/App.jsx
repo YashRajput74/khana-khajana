@@ -8,7 +8,9 @@ import LoginPage from "./pages/LoginPage";
 import { RecipesProvider, useRecipes } from "./context/RecipesContext";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
+import Onboarding from "./newPages/Onboarding";
+import RecipeProfile from "./newPages/RecipeProfile";
+/*   git switch -c <new-branch-name> */
 function ScrollToTop() {
     const { pathname } = useLocation();
 
@@ -32,7 +34,7 @@ function AppRoutes() {
             <Route
                 path="/login"
                 element={
-                    user ? <Navigate to="/" replace /> : <LoginPage />
+                    user ? <Navigate to="/" replace /> : <RecipeProfile />
                 }
             />
 

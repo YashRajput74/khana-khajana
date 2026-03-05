@@ -1,0 +1,215 @@
+.onboarding {
+    min-height: 100vh;
+    background: #0A0A0A;
+    color: white;
+    font-family: Inter, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER */
+
+.onb-header {
+    padding: 32px 0 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.onb-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-icon {
+    color: #D4AF37;
+    font-size: 28px;
+}
+
+.logo-text {
+    color: #D4AF37;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: .05em;
+}
+
+/* MAIN */
+
+.onb-main {
+    flex: 1;
+    max-width: 1000px;
+    margin: auto;
+    width: 100%;
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+}
+
+/* LOGIN CARD */
+
+.onb-login-card {
+    width: 100%;
+    max-width: 500px;
+    background: #171717;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 32px;
+    text-align: left;
+    position: relative;
+    cursor: pointer;
+    transition: .3s;
+    color: #A3A3A3;
+
+}
+
+.onb-login-card:hover {
+    border-color: #D4AF37;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.onb-login-card h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.onb-login-card p {
+    font-size: 14px;
+    color: #A3A3A3;
+}
+
+.arrow {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    color: #D4AF37;
+}
+
+/* DIVIDER */
+
+.onb-divider {
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+/* PREFERENCE */
+
+.onb-pref-section {
+    text-align: center;
+}
+
+.onb-title {
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 40px;
+}
+
+.onb-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.onb-card {
+    height: 260px;
+    background: #171717;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.onb-card:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.onb-card h4 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.onb-card p {
+    font-size: 14px;
+    color: #A3A3A3;
+    text-align: center;
+}
+
+/* ICONS */
+
+.icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.veg-icon {
+    background: rgba(22, 163, 74, 0.25);
+    color: #4ade80;
+}
+
+.nonveg-icon {
+    background: rgba(220, 38, 38, 0.25);
+    color: #f87171;
+}
+
+/* ACTIVE */
+
+.veg-active {
+    border-color: #22c55e;
+}
+
+.nonveg-active {
+    border-color: #ef4444;
+}
+
+/* CHECK */
+
+.check {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 20px;
+}
+
+/* CONTINUE */
+
+.onb-continue {
+    margin-top: 40px;
+    background: #D4AF37;
+    color: black;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 999px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.onb-continue:hover {
+    background: #E5C565;
+}
+
+/* FOOTER */
+
+.onb-footer {
+    padding: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #737373;
+}
