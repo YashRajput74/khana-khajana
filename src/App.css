@@ -17,11 +17,28 @@
     --font-sans: "Inter", sans-serif;
 }
 
-/* Enable dark mode */
+@layer utilities {
+  .bg-background-dark { background-color: var(--color-background-dark); }
+  .bg-surface-dark { background-color: var(--color-surface-dark); }
+
+  .text-text-secondary-dark { color: var(--color-text-secondary-dark); }
+
+  .border-primary { border-color: var(--color-primary); }
+  .text-primary { color: var(--color-primary); }
+}
+/* enable dark mode */
 :root {
     color-scheme: dark;
 }
 
+/* VERY IMPORTANT FOR FULLSCREEN LAYOUT */
+html,
+body,
+#root {
+    height: 100%;
+}
+
+/* reset */
 * {
     padding: 0;
     margin: 0;
