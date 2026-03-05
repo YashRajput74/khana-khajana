@@ -1,16 +1,17 @@
 import { useState } from "react";
 import "./Onboarding.css";
 
-export default function Onboarding({ onLogin }) {
-    const [diet, setDiet] = useState("");
+export default function Onboarding({ onLogin, onContinue }) {
+
+    const [selectedDiet, setSelectedDiet] = useState(null);
 
     const handleContinue = () => {
-        if (!diet) {
+        if (!selectedDiet) {
             alert("Please select your preference");
             return;
         }
 
-        console.log("Selected:", diet);
+        onContinue(selectedDiet);
     };
 
     return (
@@ -22,28 +23,38 @@ export default function Onboarding({ onLogin }) {
                     <span className="material-symbols-outlined logo-icon">
                         restaurant_menu
                     </span>
-                    <span className="logo-text">Khana Khazana</span>
+
+                    <span className="logo-text">
+                        Khana Khazana
+                    </span>
                 </div>
             </header>
 
-            {/* Main */}
             <main className="onb-main">
 
                 {/* Login Card */}
+
                 <section className="onb-login-section">
-                    <button className="onb-login-card" onClick={onLogin}>
+
+                    <button
+                        className="onb-login-card"
+                        onClick={onLogin}
+                    >
 
                         <h2>Welcome back</h2>
 
                         <p>
                             Log in to access your saved recipes and meal plans.
                         </p>
+
                     </button>
+
                 </section>
 
                 <div className="onb-divider"></div>
 
-                {/* Preference */}
+                {/* Diet Preference */}
+
                 <section className="onb-pref-section">
 
                     <h3 className="onb-title">
@@ -53,14 +64,18 @@ export default function Onboarding({ onLogin }) {
                     <div className="onb-options">
 
                         {/* Veg */}
+
                         <div
-                            className={`onb-card ${diet === "veg" ? "veg-active" : ""}`}
-                            onClick={() => setDiet("veg")}
+                            className={`onb-card ${selectedDiet === "veg" ? "veg-active" : ""}`}
+                            onClick={() => setSelectedDiet("veg")}
                         >
+
                             <div className="icon veg-icon">
+
                                 <span className="material-symbols-outlined">
                                     eco
                                 </span>
+
                             </div>
 
                             <h4>Pure Vegetarian</h4>
@@ -69,22 +84,28 @@ export default function Onboarding({ onLogin }) {
                                 Plant-based delights tailored to your taste.
                             </p>
 
-                            {diet === "veg" && (
+                            {selectedDiet === "veg" && (
                                 <span className="check material-symbols-outlined">
                                     check
                                 </span>
                             )}
+
                         </div>
 
+
                         {/* Non Veg */}
+
                         <div
-                            className={`onb-card ${diet === "nonveg" ? "nonveg-active" : ""}`}
-                            onClick={() => setDiet("nonveg")}
+                            className={`onb-card ${selectedDiet === "nonveg" ? "nonveg-active" : ""}`}
+                            onClick={() => setSelectedDiet("nonveg")}
                         >
+
                             <div className="icon nonveg-icon">
+
                                 <span className="material-symbols-outlined">
                                     set_meal
                                 </span>
+
                             </div>
 
                             <h4>Non-Vegetarian</h4>
@@ -93,27 +114,34 @@ export default function Onboarding({ onLogin }) {
                                 Rich meat dishes and varied protein options.
                             </p>
 
-                            {diet === "nonveg" && (
+                            {selectedDiet === "nonveg" && (
                                 <span className="check material-symbols-outlined">
                                     check
                                 </span>
                             )}
+
                         </div>
 
                     </div>
 
-                    <button className="onb-continue" onClick={handleContinue}>
+
+                    <button
+                        className="onb-continue"
+                        onClick={handleContinue}
+                    >
+
                         Continue
+
                         <span className="material-symbols-outlined">
                             arrow_forward
                         </span>
+
                     </button>
 
                 </section>
 
             </main>
 
-            {/* Footer */}
             <footer className="onb-footer">
                 © Khana Khazana AI Assistant
             </footer>

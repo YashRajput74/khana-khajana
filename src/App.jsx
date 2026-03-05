@@ -1,16 +1,15 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import './App.css';
-import HomePage from "./pages/HomePage";
-import RecipePage from "./pages/RecipePage";
-import PlannerPage from "./pages/PlannerPage";
-import RecipeDetailPage from "./pages/RecipeDetailPage";
-import LoginPage from "./pages/LoginPage";
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import "./App.css";
+import HomePage from "./newPages/HomePage";
+import WelcomeBack from "./newPages/WelcomeBack";
+import Onboarding from "./newPages/Onboarding";
+import RecipeProfile from "./newPages/RecipeProfile";
 import { RecipesProvider, useRecipes } from "./context/RecipesContext";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import Onboarding from "./newPages/Onboarding";
-import RecipeProfile from "./newPages/RecipeProfile";
-/*   git switch -c <new-branch-name> */
+import CuisineSelect from "./newPages/CuisineSelect";
+import TasteProfile from "./newPages/TasteProfile";
+
 function ScrollToTop() {
     const { pathname } = useLocation();
 
@@ -25,44 +24,72 @@ function ScrollToTop() {
 }
 
 function AppRoutes() {
-    const { user, authLoaded } = useRecipes();
+
+    const { user, authLoaded, setDietPreference, setCuisinePreferences, setTastePreferences } = useRecipes();
+    const navigate = useNavigate();
 
     if (!authLoaded) return null;
 
     return (
         <Routes>
+
             <Route
                 path="/login"
                 element={
-                    user ? <Navigate to="/" replace /> : <RecipeProfile />
+                    user
+                        ? <Navigate to="/" replace />
+                        : <WelcomeBack />
                 }
             />
 
             <Route
-                path="/"
+                path="/onboarding"
                 element={
-                    user ? <HomePage /> : <Navigate to="/login" replace />
+                    user
+                        ? <Navigate to="/" replace />
+                        : (
+                            <Onboarding
+                                onLogin={() => navigate("/login")}
+                                onContinue={(diet) => {
+                                    setDietPreference(diet);
+                                    navigate("/onboarding/cuisine");
+                                }}
+                            />
+                        )
                 }
             />
+
             <Route
-                path="/recipes"
+                path="/onboarding/cuisine"
                 element={
-                    user ? <RecipePage /> : <Navigate to="/login" replace />
+                    <CuisineSelect
+                        onNext={(cuisines) => {
+                            setCuisinePreferences(cuisines);
+                            navigate("/onboarding/taste");
+                        }}
+                        onSkip={() => navigate("/onboarding/taste")}
+                    />
                 }
             />
+
             <Route
-                path="/planner"
+                path="/onboarding/taste"
                 element={
-                    user ? <PlannerPage /> : <Navigate to="/login" replace />
+                    <TasteProfile
+                        onFinish={(tastes) => {
+                            setTastePreferences(tastes);
+                            navigate("/");
+                        }}
+                        onSkip={() => navigate("/")}
+                    />
                 }
             />
-            <Route
-                path="/recipes/:id"
-                element={
-                    user ? <RecipeDetailPage /> : <Navigate to="/login" replace />
-                }
-            />
-            
+
+            <Route path="/" element={<HomePage />} />
+
+            {/* ADD THIS */}
+            <Route path="/recipes/:id" element={<RecipeProfile />} />
+
         </Routes>
     );
 }

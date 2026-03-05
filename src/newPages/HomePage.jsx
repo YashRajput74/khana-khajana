@@ -1,9 +1,17 @@
 import "./HomePage.css";
+import { useRecipes } from "../context/RecipesContext";
+import { useState } from "react";
+import AISuggestModal from "../components/AISuggestModal";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
 
+    const { suggestMeal } = useRecipes();
+    const navigate = useNavigate();
+
     const dishes = [
         {
+            id: "paneer-butter-masala",
             title: "Paneer Butter Masala",
             desc: "Rich creamy gravy with soft paneer cubes.",
             img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAe0iVWSKEZ-GE2ewFL-maWJ8TPyqeQAH2Mzm7OOnhsBXtqJnW4Eu_Dr9GF_DHKHwN1sQY7R4h3-ian5ZjBNzAJL9wIu0UxNg0ov09EALn5V-FzKT8AOP-c4b2IpsrrQrx5bxiu1mmZLDoU5cyb125QvnV0hCloFbujX_YJd-t-3T-8U7HBjtnxKAYL0JeIL0DfslOBTKYmnhIZxzYvLRi1Iuyo7CXJNSdOuXXaQfzJo_mvUFJ-FyZLIhQM4vWOqZz1MpFfpS5Zn9k"
@@ -39,72 +47,182 @@ export default function HomePage() {
             img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBisNL31wXja84sEXRrupJ-CQoscoECZGBeLtVFNG80wP-54SJjYIg7sPYdgd5MvZmJJy_8cQCk6sg1WkcU0hqwqKnd-SBNZFvD4gjQCKGTACQ3NwAHWRTPhAR6smNkNmd0evKT7ACbxBX_5ooVNH0t7LlEjpA1OhtKaOw1BxdYP6t8nR2NQHn8xnPALVnFtsj0YVMXtkDWVf3iqAbe0t0b-CttljuvdbwqGK7UYVTGZVjg0Ey60D57pzfy3YnVIvU7wARVzh7aLfE"
         }
     ];
+    const [activeTab, setActiveTab] = useState("ai");
 
+    const [aiDishes, setAiDishes] = useState(dishes);
+    const [safeRepeats, setSafeRepeats] = useState([]);
+    const [forgotten, setForgotten] = useState([]);
+    const [isListening, setIsListening] = useState(false);
+    const [aiQuery, setAiQuery] = useState("");
+    const [isLoadingAI, setIsLoadingAI] = useState(false);
+    const [aiSuggestion, setAiSuggestion] = useState(null);
+    const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+    const [excludedIds, setExcludedIds] = useState([]);
+
+    const startListening = () => {
+
+        if (!("webkitSpeechRecognition" in window)) {
+            alert("Speech recognition not supported in this browser.");
+            return;
+        }
+
+        const recognition = new window.webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = "en-IN";
+
+        recognition.onstart = () => setIsListening(true);
+        recognition.onend = () => setIsListening(false);
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            setAiQuery(transcript);
+            handleSuggest(transcript);
+        };
+
+        recognition.start();
+    };
+
+    const handleSuggest = async (query) => {
+
+        const finalQuery = query || aiQuery;
+        if (!finalQuery.trim()) return;
+
+        setIsLoadingAI(true);
+
+        const result = await suggestMeal(finalQuery, excludedIds);
+
+        setIsLoadingAI(false);
+
+        if (result) {
+            setAiSuggestion(result);
+            setIsAiModalOpen(true);
+            setExcludedIds(prev => [...prev, result.recipeId]);
+        }
+    };
+    let visibleDishes = [];
+
+    if (activeTab === "ai") visibleDishes = aiDishes;
+    if (activeTab === "safe") visibleDishes = safeRepeats;
+    if (activeTab === "forgotten") visibleDishes = forgotten;
     return (
+
         <div className="kh-home">
 
             <header className="kh-home-header">
-                <h1 className="kh-home-logo">Khana Khazana</h1>
+
+                <h1 className="kh-home-logo">
+                    Khana Khazana
+                </h1>
 
                 <img
                     className="kh-home-avatar"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmCD_ipAkdv8HKf-8F6aPCxkbc48anMUoTEIuCMo2bQVP4grzNLj6tJ6PzFp7m4JxpNW66CZatxEcsVi9ijg8TO1IKmTWr9F7Z9yxO1QTuU-nAHF7MH-eB2Youk1pPkgVqco3fVO9oR6thv9iJu4I8lLz-ZP0WtW-i76dE-4uUy1tEOvUKTakRo6-E1Kfrso4EawnaAT_P7kMSROYW6Z5D-22E1DkgPRAVSjGtkeyywTG8cabiAwTYPqduh5fX2zTHa0Nap0CI6-M"
                     alt="profile"
                 />
+
             </header>
+
 
             <section className="kh-home-hero">
 
-                <button className="kh-home-mic">
-                    <span className="material-icons-round">mic</span>
+                <button
+                    className={`kh-home-mic ${isListening ? "listening" : ""}`}
+                    onClick={startListening}
+                >
+                    <span className="material-icons-round">
+                        mic
+                    </span>
                 </button>
 
-                <h2>Sandhya's Kitchen AI</h2>
+                <h2>
+                    User's Kitchen AI
+                </h2>
 
                 <p className="kh-home-listening">
-                    Listening for your favorite dishes...
+
+                    {isListening
+                        ? "Listening..."
+                        : "Tap to add a dish or ask 'What should I cook?'"
+                    }
+
                 </p>
 
-                <p className="kh-home-hint">
-                    Tap to add a dish or ask "What should I cook?"
-                </p>
+                <button
+                    className="kh-home-edit"
+                    onClick={() => handleSuggest()}
+                    disabled={isLoadingAI}
+                >
 
-                <button className="kh-home-edit">
-                    Edit Preferences
+                    {isLoadingAI ? "Thinking..." : "Suggest Dish"}
+
                 </button>
 
             </section>
 
+
             <nav className="kh-home-tabs">
-                <span className="active">Recently Made</span>
-                <span>Safe Repeats</span>
-                <span>Forgotten</span>
+
+                <span
+                    className={activeTab === "ai" ? "active" : ""}
+                    onClick={() => setActiveTab("ai")}
+                >
+                    Suggested By AI
+                </span>
+
+                <span
+                    className={activeTab === "safe" ? "active" : ""}
+                    onClick={() => setActiveTab("safe")}
+                >
+                    Safe Repeats
+                </span>
+
+                <span
+                    className={activeTab === "forgotten" ? "active" : ""}
+                    onClick={() => setActiveTab("forgotten")}
+                >
+                    Forgotten
+                </span>
+
             </nav>
+
 
             <section className="kh-home-grid">
 
-                {dishes.map((dish, i) => (
+                {visibleDishes.length === 0 ? (
 
-                    <div key={i} className="kh-home-card">
+                    <div className="kh-home-empty">
+                        Nothing here yet
+                    </div>
 
-                        <img src={dish.img} alt={dish.title} />
+                ) : (
 
-                        <div className="kh-home-overlay">
+                    visibleDishes.map((dish, i) => (
 
-                            <h3>{dish.title}</h3>
+                        <div key={i} className="kh-home-card" onClick={() => navigate(`/recipes/${dish.id}`)}>
 
-                            <p>{dish.desc}</p>
+                            <img src={dish.img} alt={dish.title} />
+
+                            <div className="kh-home-overlay">
+                                <h3>{dish.title}</h3>
+                                <p>{dish.desc}</p>
+                            </div>
 
                         </div>
 
-                    </div>
+                    ))
 
-                ))}
+                )}
 
             </section>
 
+
             <button className="kh-home-add">
-                <span className="material-icons-round">add</span>
+
+                <span className="material-icons-round">
+                    add
+                </span>
+
             </button>
 
         </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./CuisineSelect.css";
 
-export default function CuisineSelect({ onNext }) {
+export default function CuisineSelect({ onNext, onSkip }) {
 
     const cuisines = [
         { name: "North Indian", icon: "flatware" },
@@ -25,8 +25,13 @@ export default function CuisineSelect({ onNext }) {
     };
 
     const handleNext = () => {
-        console.log("Selected cuisines:", selected);
-        if (onNext) onNext(selected);
+
+        if (selected.length === 0) {
+            alert("Please select at least one cuisine");
+            return;
+        }
+
+        onNext(selected);
     };
 
     return (
@@ -40,13 +45,10 @@ export default function CuisineSelect({ onNext }) {
                     Khana Khazana
                 </div>
 
-                {/* <div className="kk-root-progress">
-                    <span></span>
-                    <span className="kk-root-progress-active"></span>
-                    <span></span>
-                </div> */}
-
-                <button className="kk-root-skip">
+                <button
+                    className="kk-root-skip"
+                    onClick={onSkip}
+                >
                     Skip
                 </button>
 
@@ -72,7 +74,9 @@ export default function CuisineSelect({ onNext }) {
 
                     <div
                         key={c.name}
-                        className={`kk-root-card ${selected.includes(c.name) ? "kk-root-card-selected" : ""
+                        className={`kk-root-card ${selected.includes(c.name)
+                                ? "kk-root-card-selected"
+                                : ""
                             }`}
                         onClick={() => toggleCuisine(c.name)}
                     >

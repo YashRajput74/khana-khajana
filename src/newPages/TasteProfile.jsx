@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./TasteProfile.css";
 
-export default function TasteProfile({ onFinish }) {
+export default function TasteProfile({ onFinish, onSkip }) {
 
     const options = [
         { name: "Chinese", icon: "ramen_dining" },
@@ -31,7 +31,6 @@ export default function TasteProfile({ onFinish }) {
     };
 
     const handleFinish = () => {
-        console.log("Taste profile:", selected);
         if (onFinish) onFinish(selected);
     };
 
@@ -41,12 +40,9 @@ export default function TasteProfile({ onFinish }) {
             {/* HEADER */}
 
             <header className="kk-taste-header">
+
                 <div className="kk-taste-logo">
                     Khana Khazana
-                </div>
-
-                <div className="kk-taste-step">
-                    Skip
                 </div>
             </header>
 
@@ -82,7 +78,9 @@ export default function TasteProfile({ onFinish }) {
                     <button
                         key={opt.name}
                         onClick={() => toggle(opt.name)}
-                        className={`kk-taste-pill ${selected.includes(opt.name) ? "kk-taste-pill-active" : ""
+                        className={`kk-taste-pill ${selected.includes(opt.name)
+                                ? "kk-taste-pill-active"
+                                : ""
                             }`}
                     >
 
@@ -108,12 +106,17 @@ export default function TasteProfile({ onFinish }) {
                     onClick={handleFinish}
                 >
                     Build my Kitchen AI
+
                     <span className="material-symbols-outlined">
                         arrow_forward
                     </span>
+
                 </button>
 
-                <button className="kk-taste-skip">
+                <button
+                    className="kk-taste-skip"
+                    onClick={onSkip}
+                >
                     Skip for now
                 </button>
 

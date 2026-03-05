@@ -8,7 +8,32 @@ export function RecipesProvider({ children }) {
     const [recipes, setRecipes] = useState({});
     const [planner, setPlanner] = useState([]);
     const [user, setUser] = useState();
+    const [preferences, setPreferences] = useState({
+        diet: null,
+        cuisines: [],
+        tastes: []
+    });
 
+    const setDietPreference = (diet) => {
+        setPreferences(prev => ({
+            ...prev,
+            diet
+        }));
+    };
+
+    const setCuisinePreferences = (cuisines) => {
+        setPreferences(prev => ({
+            ...prev,
+            cuisines
+        }));
+    };
+
+    const setTastePreferences = (tastes) => {
+        setPreferences(prev => ({
+            ...prev,
+            tastes
+        }));
+    };
     useEffect(() => {
         const getSession = async () => {
             const { data } = await supabase.auth.getSession();
@@ -372,7 +397,11 @@ export function RecipesProvider({ children }) {
                 signup,
                 logout,
                 suggestMeal,
-                loginWithGoogle
+                loginWithGoogle,
+                preferences,
+                setDietPreference,
+                setCuisinePreferences,
+                setTastePreferences
             }}
         >
             {children}
