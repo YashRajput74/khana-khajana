@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { RecipesProvider, useRecipes } from "./context/RecipesContext";
 import "./App.css";
 import HomePage from "./newPages/HomePage";
 import WelcomeBack from "./newPages/WelcomeBack";
 import Onboarding from "./newPages/Onboarding";
 import RecipeProfile from "./newPages/RecipeProfile";
-import { RecipesProvider, useRecipes } from "./context/RecipesContext";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import CuisineSelect from "./newPages/CuisineSelect";
 import TasteProfile from "./newPages/TasteProfile";
 
@@ -25,7 +25,7 @@ function ScrollToTop() {
 
 function AppRoutes() {
 
-    const { user, authLoaded, setDietPreference, setCuisinePreferences, setTastePreferences } = useRecipes();
+    const { user, authLoaded, diet, setDietPreference, setCuisinePreferences, setTastePreferences } = useRecipes();
     const navigate = useNavigate();
 
     if (!authLoaded) return null;
@@ -45,7 +45,7 @@ function AppRoutes() {
             <Route
                 path="/onboarding"
                 element={
-                    user
+                    user || diet
                         ? <Navigate to="/" replace />
                         : (
                             <Onboarding
@@ -62,32 +62,46 @@ function AppRoutes() {
             <Route
                 path="/onboarding/cuisine"
                 element={
-                    <CuisineSelect
-                        onNext={(cuisines) => {
-                            setCuisinePreferences(cuisines);
-                            navigate("/onboarding/taste");
-                        }}
-                        onSkip={() => navigate("/onboarding/taste")}
-                    />
+                    diet
+                        ? (
+                            <CuisineSelect
+                                onNext={(cuisines) => {
+                                    setCuisinePreferences(cuisines);
+                                    navigate("/onboarding/taste");
+                                }}
+                                onSkip={() => navigate("/onboarding/taste")}
+                            />
+                        )
+                        : <Navigate to="/onboarding" replace />
                 }
             />
 
             <Route
                 path="/onboarding/taste"
                 element={
-                    <TasteProfile
-                        onFinish={(tastes) => {
-                            setTastePreferences(tastes);
-                            navigate("/");
-                        }}
-                        onSkip={() => navigate("/")}
-                    />
+                    diet
+                        ? (
+                            <TasteProfile
+                                onFinish={(tastes) => {
+                                    setTastePreferences(tastes);
+                                    navigate("/");
+                                }}
+                                onSkip={() => navigate("/")}
+                            />
+                        )
+                        : <Navigate to="/onboarding" replace />
                 }
             />
 
-            <Route path="/" element={<HomePage />} />
+            <Route
+                path="/"
+                element={
+                    user || diet
+                        ? <HomePage />
+                        : <Navigate to="/onboarding" replace />
+                }
+            />
 
-            {/* ADD THIS */}
             <Route path="/recipes/:id" element={<RecipeProfile />} />
 
         </Routes>

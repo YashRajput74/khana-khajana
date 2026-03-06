@@ -6,15 +6,17 @@ const RecipesContext = createContext();
 export function RecipesProvider({ children }) {
     const [authLoaded, setAuthLoaded] = useState(false);
     const [recipes, setRecipes] = useState({});
-    const [planner, setPlanner] = useState([]);
     const [user, setUser] = useState();
-    const [preferences, setPreferences] = useState({
-        diet: null,
-        cuisines: [],
-        tastes: []
-    });
-
+    const [preferences, setPreferences] = useState(() => ({
+        diet: localStorage.getItem("dietPreference"),
+        cuisines: JSON.parse(localStorage.getItem("cuisinePreferences") || "[]"),
+        tastes: JSON.parse(localStorage.getItem("tastePreferences") || "[]")
+    }));
+    const [suggestions, setSuggestions] = useState([]);
+    const { diet, cuisines, tastes } = preferences;
     const setDietPreference = (diet) => {
+        localStorage.setItem("dietPreference", diet);
+
         setPreferences(prev => ({
             ...prev,
             diet
@@ -22,6 +24,7 @@ export function RecipesProvider({ children }) {
     };
 
     const setCuisinePreferences = (cuisines) => {
+        localStorage.setItem("cuisinePreferences", JSON.stringify(cuisines))
         setPreferences(prev => ({
             ...prev,
             cuisines
@@ -29,11 +32,59 @@ export function RecipesProvider({ children }) {
     };
 
     const setTastePreferences = (tastes) => {
+        localStorage.setItem("tastePreferences", JSON.stringify(tastes))
         setPreferences(prev => ({
             ...prev,
             tastes
         }));
     };
+
+    const fetchSuggestions = async (query, excludedIds = []) => {
+
+        const res = await fetchWithAuth(
+            `${import.meta.env.VITE_API_URL}/api/ai/suggest`,
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    query,
+                    excludedIds,
+                    diet,
+                    cuisines,
+                    tastes
+                })
+            }
+        );
+
+        if (!res.ok) return null;
+
+        const data = await res.json();
+
+        // AI suggestions
+        if (data.type === "suggestions") {
+
+            const ids = data.suggestions.map(s => s.id);
+
+            const matchedRecipes = recipesArray.filter(r =>
+                ids.includes(r.id)
+            );
+
+            setSuggestions(matchedRecipes);
+        }
+
+        // AI requested recipe creation
+        if (data.type === "create_recipe") {
+
+            const newId = await addRecipe(data.title);
+
+            return {
+                type: "create_recipe",
+                recipeId: newId
+            };
+        }
+
+        return data;
+    };
+
     useEffect(() => {
         const getSession = async () => {
             const { data } = await supabase.auth.getSession();
@@ -79,6 +130,7 @@ export function RecipesProvider({ children }) {
                         addedAt: r.added_at,
                         lastCookedAt: r.last_cooked_at,
                         isFavorite: r.is_favorite,
+                        isSafeRepeat: r.is_safe_repeat,
                         steps: r.steps || []
                     };
                 });
@@ -89,23 +141,7 @@ export function RecipesProvider({ children }) {
             }
         }
 
-        async function loadPlanner() {
-            try {
-                const res = await fetchWithAuth(`${import.meta.env.VITE_API_URL}/api/planner`);
-                const data = await res.json();
-
-                const formatted = data.map(item => ({
-                    date: item.date,
-                    recipeId: item.recipe_id
-                }));
-
-                setPlanner(formatted);
-            } catch (err) {
-                console.error("Failed to load planner:", err);
-            }
-        }
         loadRecipes();
-        loadPlanner();
     }, [user]);
 
     const loginWithGoogle = async () => {
@@ -157,7 +193,7 @@ export function RecipesProvider({ children }) {
             ...options,
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
+                ...(token && { Authorization: `Bearer ${token}` }),
                 ...options.headers
             }
         });
@@ -165,9 +201,16 @@ export function RecipesProvider({ children }) {
 
     const logout = async () => {
         await supabase.auth.signOut();
+
+        localStorage.removeItem("dietPreference");
+
         setUser(null);
         setRecipes({});
-        setPlanner([]);
+        setPreferences({
+            diet: null,
+            cuisines: [],
+            tastes: []
+        });
     };
 
     const addRecipe = async (title) => {
@@ -196,6 +239,7 @@ export function RecipesProvider({ children }) {
                 addedAt: data.added_at,
                 lastCookedAt: data.last_cooked_at,
                 isFavorite: data.is_favorite,
+                isSafeRepeat: data.is_safe_repeat,
                 steps: data.steps || []
             };
 
@@ -269,46 +313,8 @@ export function RecipesProvider({ children }) {
                 return updated;
             });
 
-            setPlanner(prev =>
-                prev.map(day =>
-                    day.recipeId === id ? { ...day, recipeId: null } : day
-                )
-            );
-
         } catch (err) {
             console.error("Delete recipe failed:", err);
-        }
-    };
-
-    const addToPlanner = async (date, recipeId) => {
-        try {
-            const res = await fetchWithAuth(
-                `${import.meta.env.VITE_API_URL}/api/planner/${date}`,
-                {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ recipe_id: recipeId })
-                }
-            );
-
-            if (!res.ok) {
-                throw new Error("Failed to update planner");
-            }
-
-            setPlanner(prev => {
-                const exists = prev.some(day => day.date === date);
-
-                if (exists) {
-                    return prev.map(day =>
-                        day.date === date ? { ...day, recipeId } : day
-                    );
-                } else {
-                    return [...prev, { date, recipeId }];
-                }
-            });
-
-        } catch (err) {
-            console.error("Planner update failed:", err);
         }
     };
 
@@ -324,7 +330,7 @@ export function RecipesProvider({ children }) {
             if (updates.isFavorite !== undefined) mappedUpdates.is_favorite = updates.isFavorite;
             if (updates.steps !== undefined) mappedUpdates.steps = updates.steps;
             if (updates.title !== undefined) mappedUpdates.title = updates.title;
-
+            if (updates.isSafeRepeat !== undefined) mappedUpdates.is_safe_repeat = updates.isSafeRepeat;
             const res = await fetchWithAuth(
                 `${import.meta.env.VITE_API_URL}/api/recipes/${id}`,
                 {
@@ -349,6 +355,7 @@ export function RecipesProvider({ children }) {
                 addedAt: data.added_at,
                 lastCookedAt: data.last_cooked_at,
                 isFavorite: data.is_favorite,
+                isSafeRepeat: data.is_safe_repeat,
                 steps: data.steps || []
             };
 
@@ -362,47 +369,62 @@ export function RecipesProvider({ children }) {
         }
     };
 
-    const suggestMeal = async (query, excludedIds = []) => {
-        const res = await fetchWithAuth(
-            `${import.meta.env.VITE_API_URL}/api/ai/suggest`,
-            {
-                method: "POST",
-                body: JSON.stringify({ query, excludedIds })
-            }
-        );
+    const safeRepeats = useMemo(() => {
+        return recipesArray.filter(r => r.isSafeRepeat)
+    }, [recipesArray])
 
-        if (!res.ok) return null;
+    const toggleSafeRepeat = async (id) => {
+        const current = recipes[id]
 
-        return await res.json();
-    };
+        await updateRecipe(id, {
+            isSafeRepeat: !current.isSafeRepeat
+        })
+    }
 
+    const value = useMemo(() => ({
+        authLoaded,
+        recipes,
+        recipesArray,
+        user,
+        favorites,
+        recentlyCooked,
+        totalSaved,
+        suggestions,
+        safeRepeats,
+        toggleSafeRepeat,
+        toggleFavorite,
+        markAsCooked,
+        deleteRecipe,
+        addRecipe,
+        updateRecipe,
+        login,
+        signup,
+        logout,
+        loginWithGoogle,
+        preferences,
+        diet,
+        cuisines,
+        tastes,
+        setDietPreference,
+        setCuisinePreferences,
+        setTastePreferences,
+        fetchSuggestions,
+        setSuggestions
+    }), [
+        authLoaded,
+        recipes,
+        recipesArray,
+        user,
+        favorites,
+        recentlyCooked,
+        totalSaved,
+        preferences,
+        suggestions,
+        safeRepeats
+    ]);
     return (
         <RecipesContext.Provider
-            value={{
-                authLoaded,
-                recipes,
-                recipesArray,
-                planner,
-                user,
-                favorites,
-                recentlyCooked,
-                totalSaved,
-                toggleFavorite,
-                markAsCooked,
-                deleteRecipe,
-                addToPlanner,
-                addRecipe,
-                updateRecipe,
-                login,
-                signup,
-                logout,
-                suggestMeal,
-                loginWithGoogle,
-                preferences,
-                setDietPreference,
-                setCuisinePreferences,
-                setTastePreferences
-            }}
+            value={value}
         >
             {children}
         </RecipesContext.Provider>

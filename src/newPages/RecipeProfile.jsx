@@ -1,19 +1,45 @@
 import "./RecipeProfile.css";
 import { useRecipes } from "../context/RecipesContext";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function RecipeProfile() {
 
     const { id } = useParams();
     const navigate = useNavigate();
-
+    const [searchParams] = useSearchParams();
+    const isEditing = searchParams.get("edit") === "true";
     const {
         recipes,
         toggleFavorite,
-        markAsCooked
+        markAsCooked, updateRecipe
     } = useRecipes();
 
     const recipe = recipes[id];
+
+    const [form, setForm] = useState({
+        title: recipe?.title || "",
+        description: recipe?.description || "",
+        category: recipe?.category || "",
+        cookingTime: recipe?.cookingTime || "",
+        tags: recipe?.tags || [],
+        steps: recipe?.steps || [],
+        ingredients: recipe?.ingredients || []
+    });
+
+    useEffect(() => {
+        if (recipe) {
+            setForm({
+                title: recipe.title || "",
+                description: recipe.description || "",
+                category: recipe.category || "",
+                cookingTime: recipe.cookingTime || "",
+                tags: recipe.tags || [],
+                steps: recipe.steps || [],
+                ingredients: recipe.ingredients || []
+            });
+        }
+    }, [recipe]);
 
     if (!recipe) {
         return (
@@ -25,11 +51,41 @@ export default function RecipeProfile() {
 
     const ingredients = recipe.ingredients || [];
     const steps = recipe.steps || [];
+    const handleSave = async () => {
 
+        await updateRecipe(id, {
+            title: form.title,
+            category: form.category,
+            cookingTime: form.cookingTime,
+            steps: form.steps,
+            ingredients: form.ingredients,
+            tags: form.tags
+        });
+
+        navigate(`/recipes/${id}`);
+    };
+
+    const addIngredient = () => {
+        setForm(prev => ({
+            ...prev,
+            ingredients: [
+                ...prev.ingredients,
+                { qty: "", name: "" }
+            ]
+        }));
+    };
+
+    const addStep = () => {
+        setForm(prev => ({
+            ...prev,
+            steps: [
+                ...prev.steps,
+                { title: "", text: "" }
+            ]
+        }));
+    };
     return (
         <div className="recipe-page">
-
-            {/* HEADER */}
 
             <header className="recipe-page-header">
 
@@ -72,9 +128,6 @@ export default function RecipeProfile() {
 
 
             <main className="recipe-page-main">
-
-                {/* HERO */}
-
                 <section className="recipe-page-hero">
 
                     <div className="recipe-page-image">
@@ -105,7 +158,17 @@ export default function RecipeProfile() {
 
                         </div>
 
-                        <h1>{recipe.title}</h1>
+                        {isEditing ? (
+                            <input
+                                className="recipe-edit-title"
+                                value={form.title}
+                                onChange={(e) =>
+                                    setForm(prev => ({ ...prev, title: e.target.value }))
+                                }
+                            />
+                        ) : (
+                            <h1>{recipe.title}</h1>
+                        )}
 
                         <p className="recipe-page-desc">
                             {recipe.description || "A delicious homemade dish."}
@@ -113,16 +176,36 @@ export default function RecipeProfile() {
 
                         <div className="recipe-page-buttons">
 
-                            <button
-                                className="recipe-page-cook"
-                                onClick={() => markAsCooked(id)}
-                            >
-                                Cook Now
-                            </button>
+                            {isEditing ? (
+                                <>
+                                    <button className="recipe-page-save" onClick={handleSave}>
+                                        Save
+                                    </button>
 
-                            <button className="recipe-page-edit">
-                                Edit
-                            </button>
+                                    <button
+                                        className="recipe-page-cancel"
+                                        onClick={() => navigate(`/recipes/${id}`)}
+                                    >
+                                        Cancel
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <button
+                                        className="recipe-page-cook"
+                                        onClick={() => markAsCooked(id)}
+                                    >
+                                        Cook Now
+                                    </button>
+
+                                    <button
+                                        className="recipe-page-edit"
+                                        onClick={() => navigate(`/recipes/${id}?edit=true`)}
+                                    >
+                                        Edit
+                                    </button>
+                                </>
+                            )}
 
                         </div>
 
@@ -130,16 +213,8 @@ export default function RecipeProfile() {
 
                 </section>
 
-
-                {/* GRID */}
-
                 <div className="recipe-page-grid">
-
-                    {/* LEFT */}
-
                     <div className="recipe-page-left">
-
-                        {/* STATS */}
 
                         <section>
 
@@ -165,10 +240,6 @@ export default function RecipeProfile() {
                             </div>
 
                         </section>
-
-
-                        {/* INGREDIENTS */}
-
                         <section className="recipe-page-ingredients">
 
                             <div className="recipe-page-ing-header">
@@ -178,34 +249,69 @@ export default function RecipeProfile() {
 
                             <ul>
 
-                                {ingredients.map((i, index) => (
+                                {(isEditing ? form.ingredients : ingredients).map((i, index) => (
+
                                     <li key={index}>
-                                        <span className="qty">
-                                            {i.qty}
-                                        </span>
-                                        {" "}
-                                        {i.name}
+
+                                        {isEditing ? (
+                                            <>
+                                                <input
+                                                    value={i.qty || ""}
+                                                    placeholder="Qty"
+                                                    onChange={(e) => {
+                                                        const updated = [...form.ingredients];
+                                                        updated[index].qty = e.target.value;
+
+                                                        setForm(prev => ({
+                                                            ...prev,
+                                                            ingredients: updated
+                                                        }));
+                                                    }}
+                                                />
+
+                                                <input
+                                                    value={i.name || ""}
+                                                    placeholder="Ingredient"
+                                                    onChange={(e) => {
+                                                        const updated = [...form.ingredients];
+                                                        updated[index].name = e.target.value;
+
+                                                        setForm(prev => ({
+                                                            ...prev,
+                                                            ingredients: updated
+                                                        }));
+                                                    }}
+                                                />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span className="qty">{i.qty}</span> {i.name}
+                                            </>
+                                        )}
+
                                     </li>
+
                                 ))}
 
                             </ul>
+                            {isEditing && (
+                                <button onClick={addIngredient}>
+                                    Add Ingredient
+                                </button>
+                            )}
 
                         </section>
 
                     </div>
-
-
-                    {/* RIGHT */}
-
                     <div className="recipe-page-right">
-
-                        {/* STEPS */}
 
                         <section>
 
                             <h3>Preparation Steps</h3>
-
-                            {steps.map((s, index) => (
+                            {isEditing && form.steps.length === 0 && (
+                                <p>Start adding preparation steps.</p>
+                            )}
+                            {(isEditing ? form.steps : steps).map((s, index) => (
 
                                 <div
                                     className="recipe-page-step"
@@ -218,24 +324,48 @@ export default function RecipeProfile() {
 
                                     <div>
 
-                                        <h4>
-                                            {s.title}
-                                        </h4>
+                                        {isEditing ? (
+                                            <input
+                                                value={s.title || ""}
+                                                placeholder="Step title"
+                                                onChange={(e) => {
+                                                    const updated = [...form.steps];
+                                                    updated[index].title = e.target.value;
 
-                                        <p>
-                                            {s.text}
-                                        </p>
+                                                    setForm(prev => ({
+                                                        ...prev,
+                                                        steps: updated
+                                                    }));
+                                                }}
+                                            />
+                                        ) : (
+                                            <h4>{s.title}</h4>
+                                        )}
 
+                                        {isEditing ? (
+                                            <textarea
+                                                value={s.text}
+                                                onChange={(e) => {
+                                                    const updated = [...form.steps];
+                                                    updated[index].text = e.target.value;
+                                                    setForm(prev => ({ ...prev, steps: updated }));
+                                                }}
+                                            />
+                                        ) : (
+                                            <p>{s.text}</p>
+                                        )}
                                     </div>
 
                                 </div>
 
                             ))}
+                            {isEditing && (
+                                <button onClick={addStep}>
+                                    Add Step
+                                </button>
+                            )}
 
                         </section>
-
-
-                        {/* JOURNAL */}
 
                         <section className="recipe-page-journal">
 
@@ -259,7 +389,6 @@ export default function RecipeProfile() {
                                 </div>
 
                             ))}
-
                         </section>
 
                     </div>
