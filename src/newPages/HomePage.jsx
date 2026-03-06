@@ -53,14 +53,14 @@ export default function HomePage() {
         recipesArray,
         safeRepeats,
         suggestions,
-        fetchSuggestions
+        fetchSuggestions,
+        user
     } = useRecipes();
     const navigate = useNavigate();
 
     const [isListening, setIsListening] = useState(false);
     const [aiQuery, setAiQuery] = useState("");
     const [isLoadingAI, setIsLoadingAI] = useState(false);
-    const [excludedIds, setExcludedIds] = useState([]);
     const [activeTab, setActiveTab] = useState("ai");
 
     const handleSuggest = async (query) => {
@@ -101,6 +101,10 @@ export default function HomePage() {
     }
 
     const startListening = () => {
+        if (!user) {
+            navigate("/login");
+            return;
+        }
 
         if (!("webkitSpeechRecognition" in window)) {
             alert("Speech recognition not supported in this browser.");
@@ -156,6 +160,7 @@ export default function HomePage() {
                     className="kh-home-avatar"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmCD_ipAkdv8HKf-8F6aPCxkbc48anMUoTEIuCMo2bQVP4grzNLj6tJ6PzFp7m4JxpNW66CZatxEcsVi9ijg8TO1IKmTWr9F7Z9yxO1QTuU-nAHF7MH-eB2Youk1pPkgVqco3fVO9oR6thv9iJu4I8lLz-ZP0WtW-i76dE-4uUy1tEOvUKTakRo6-E1Kfrso4EawnaAT_P7kMSROYW6Z5D-22E1DkgPRAVSjGtkeyywTG8cabiAwTYPqduh5fX2zTHa0Nap0CI6-M"
                     alt="profile"
+                    onClick={() => navigate(user ? "/profile" : "/login")}
                 />
 
             </header>
