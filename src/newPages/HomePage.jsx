@@ -255,7 +255,7 @@ export default function HomePage() {
 
                         <div key={dish.id || i} className="kh-home-card" onClick={() => navigate(`/recipes/${dish.id}`)}>
 
-                            <img src={dish.image} alt={dish.title} />
+                            <img src={dish.image || "/dummy_image.png"} alt={dish.title} />
 
                             <div className="kh-home-overlay">
                                 <h3>{dish.title}</h3>

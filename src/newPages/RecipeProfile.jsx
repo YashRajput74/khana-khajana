@@ -166,7 +166,7 @@ export default function RecipeProfile() {
                     <div className="recipe-page-image">
 
                         <img
-                            src={recipe.image}
+                            src={recipe.image ? recipe.image : "/dummy_image.png"}
                             alt={recipe.title}
                         />
 

@@ -73,13 +73,24 @@ export function RecipesProvider({ children }) {
 
         // AI requested recipe creation
         if (data.type === "create_recipe") {
-
-            const newId = await addRecipe(data.title);
-
-            return {
-                type: "create_recipe",
-                recipeId: newId
+            const newRecipe = {
+                title: "New Recipe",
+                image: null,
+                category: "Uncategorized",
+                tags: [],
+                cookingTime: null,
+                addedAt: new Date().toISOString(),
+                lastCookedAt: null,
+                isFavorite: false,
+                isSafeRepeat: false,
+                steps: []
             };
+
+            setRecipes(prev => ({
+                ...prev,
+                [data.recipeId]: newRecipe
+            }));
+            return data;
         }
 
         return data;
