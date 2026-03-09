@@ -165,11 +165,133 @@
     margin-bottom: 12px;
 }
 
-.recipe-page-steper{
+.recipe-page-steper {
     line-height: 20px;
 }
-.recipe-page-flexing{
+
+.recipe-page-flexing {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.recipe-page-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.recipe-page-tag {
+    background: #E5C875;
+    color: #1e1e1e;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.recipe-page-tag-remove {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.recipe-page-tag-input {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.recipe-page-tag-input input {
+    flex: 1;
+}
+
+.recipe-page-back,
+.recipe-page-actions button {
+    padding: 8px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: #E5C875;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.recipe-page-back:hover,
+.recipe-page-actions button:hover {
+    background: #1e1e1e;
+}
+.recipe-edit-title {
+    width: 100%;
+    
+    font-size: 40px;
+    font-weight: 700;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #444;
+    color: #fff;
+    outline: none;
+    margin-bottom: 10px;
+}
+.recipe-page-flexing input {
+    width: 100%;
+    max-width: 500px;
+    min-width: 300px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: #f3f3f3;
+    font-size: 14px;
+}
+
+.recipe-page-flexing input:focus {
+    border-color: #E5C875;
+}
+.recipe-page-right button {
+    margin-top: 10px;
+    background: #E5C875;
+    color: #1f2937;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.recipe-page-save {
+    background: #E5C875;
+    color: #1f2937;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 16px;
+    font-weight: 700;
+}
+
+.recipe-page-cancel {
+    border: 1px solid #444;
+    background: transparent;
+    color: #ddd;
+    padding: 14px 24px;
+    border-radius: 16px;
+}
+.recipe-page-tag-input input {
+    flex: 1;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: #f3f3f3;
+}
+
+.recipe-page-tag-input button {
+    background: #E5C875;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    color: #1f2937;
+    font-weight: 600;
 }

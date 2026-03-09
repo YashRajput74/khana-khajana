@@ -26,6 +26,7 @@ export default function RecipeProfile() {
         steps: [],
         ingredients: []
     });
+    const [newTag, setNewTag] = useState("");
     const recipe = recipes[id];
     const isNewRecipe = isEditing && recipe?.title === "New Recipe";
     useEffect(() => {
@@ -49,10 +50,33 @@ export default function RecipeProfile() {
         );
     }
 
-    // const ingredients = recipe.ingredients || [];
     const steps = recipe.steps || [];
-    console.log("recipe data:", recipe);
+    const shareRecipe = () => {
+        const url = `${window.location.origin}/recipes/${id}`;
 
+        const whatsappUrl =
+            `https://wa.me/?text=${encodeURIComponent(
+                `Check out this recipe: ${recipe.title} 🍲 ${url}`
+            )}`;
+
+        window.open(whatsappUrl, "_blank");
+    };
+
+    const addTag = (tag) => {
+        if (!tag.trim()) return;
+
+        setForm(prev => ({
+            ...prev,
+            tags: [...prev.tags, tag.trim()]
+        }));
+    };
+
+    const removeTag = (index) => {
+        setForm(prev => ({
+            ...prev,
+            tags: prev.tags.filter((_, i) => i !== index)
+        }));
+    };
 
     const handleSave = async () => {
 
@@ -101,7 +125,7 @@ export default function RecipeProfile() {
                                 return;
                             }
 
-                            navigate(-1);
+                            navigate("/");
                         }}
                     >
                         <span className="material-symbols-outlined">
@@ -126,7 +150,7 @@ export default function RecipeProfile() {
                     </button>
 
                     <button>
-                        <span className="material-symbols-outlined">
+                        <span className="material-symbols-outlined" onClick={shareRecipe}>
                             share
                         </span>
                     </button>
@@ -201,7 +225,7 @@ export default function RecipeProfile() {
                                                 return;
                                             }
 
-                                            navigate(`/recipes/${id}`);
+                                            navigate(`/`);
                                         }}
                                     >
                                         Cancel
@@ -233,93 +257,55 @@ export default function RecipeProfile() {
 
                 <div className="recipe-page-grid">
                     <div className="recipe-page-left">
+                        <section className="recipe-page-tags">
 
-                        {/* <section>
+                            <h3>Tags</h3>
 
-                            <h3>Quick Stats</h3>
+                            <div className="recipe-page-tags-container">
 
-                            <div className="recipe-page-stats">
+                                {(isEditing ? form.tags : recipe.tags || []).map((tag, index) => (
 
-                                <div>
-                                    <span>Prep</span>
-                                    <strong>{recipe.prepTime || "—"}</strong>
-                                </div>
+                                    <span key={index} className="recipe-page-tag">
 
-                                <div>
-                                    <span>Cook</span>
-                                    <strong>{recipe.cookingTime || "—"}</strong>
-                                </div>
+                                        {tag}
 
-                                <div className="full">
-                                    <span>Calories</span>
-                                    <strong>{recipe.calories || "—"}</strong>
-                                </div>
-
-                            </div>
-
-                        </section> */}
-                        {/* <section className="recipe-page-ingredients">
-
-                            <div className="recipe-page-ing-header">
-                                <h3>Ingredients</h3>
-                                <span>Serves {recipe.servings || 2}</span>
-                            </div>
-
-                            <ul>
-
-                                {(isEditing ? form.ingredients : ingredients).map((i, index) => (
-
-                                    <li key={index}>
-
-                                        {isEditing ? (
-                                            <>
-                                                <input
-                                                    value={i.qty || ""}
-                                                    placeholder="Qty"
-                                                    onChange={(e) => {
-                                                        const updated = [...form.ingredients];
-                                                        updated[index].qty = e.target.value;
-
-                                                        setForm(prev => ({
-                                                            ...prev,
-                                                            ingredients: updated
-                                                        }));
-                                                    }}
-                                                />
-
-                                                <input
-                                                    value={i.name || ""}
-                                                    placeholder="Ingredient"
-                                                    onChange={(e) => {
-                                                        const updated = [...form.ingredients];
-                                                        updated[index].name = e.target.value;
-
-                                                        setForm(prev => ({
-                                                            ...prev,
-                                                            ingredients: updated
-                                                        }));
-                                                    }}
-                                                />
-                                            </>
-                                        ) : (
-                                            <>
-                                                <span className="qty">{i.qty}</span> {i.name}
-                                            </>
+                                        {isEditing && (
+                                            <button
+                                                className="recipe-page-tag-remove"
+                                                onClick={() => removeTag(index)}
+                                            >
+                                                ×
+                                            </button>
                                         )}
 
-                                    </li>
+                                    </span>
 
                                 ))}
 
-                            </ul>
+                            </div>
+
                             {isEditing && (
-                                <button onClick={addIngredient}>
-                                    Add Ingredient
-                                </button>
+                                <div className="recipe-page-tag-input">
+
+                                    <input
+                                        value={newTag}
+                                        placeholder="Add tag..."
+                                        onChange={(e) => setNewTag(e.target.value)}
+                                    />
+
+                                    <button
+                                        onClick={() => {
+                                            addTag(newTag);
+                                            setNewTag("");
+                                        }}
+                                    >
+                                        Add
+                                    </button>
+
+                                </div>
                             )}
 
-                        </section> */}
-
+                        </section>
                     </div>
                     <div className="recipe-page-right">
 
@@ -368,30 +354,6 @@ export default function RecipeProfile() {
                             )}
 
                         </section>
-
-                        {/* <section className="recipe-page-journal">
-
-                            <h3>Cook's Journal</h3>
-
-                            {(recipe.notes || []).map((note, i) => (
-
-                                <div
-                                    className="recipe-page-note"
-                                    key={i}
-                                >
-
-                                    <p>
-                                        "{note.text}"
-                                    </p>
-
-                                    <span>
-                                        — Added {new Date(note.date).toLocaleDateString()}
-                                    </span>
-
-                                </div>
-
-                            ))}
-                        </section> */}
 
                     </div>
 
