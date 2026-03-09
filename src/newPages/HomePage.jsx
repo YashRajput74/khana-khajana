@@ -2,6 +2,8 @@ import "./HomePage.css";
 import { useRecipes } from "../context/RecipesContext";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { APP_NAME } from "../config/appconfig";
+import ProfileDropdown from "../components/ProfileDropDown";
 
 const dishes = [
     {
@@ -54,6 +56,7 @@ export default function HomePage() {
         safeRepeats,
         suggestions,
         fetchSuggestions,
+        addRecipe,
         user
     } = useRecipes();
     const navigate = useNavigate();
@@ -62,7 +65,8 @@ export default function HomePage() {
     const [aiQuery, setAiQuery] = useState("");
     const [isLoadingAI, setIsLoadingAI] = useState(false);
     const [activeTab, setActiveTab] = useState("ai");
-
+    const [creatingRecipe, setCreatingRecipe] = useState(false);
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
     const handleSuggest = async (query) => {
         const finalQuery = query || aiQuery;
         if (!finalQuery.trim()) return;
@@ -153,14 +157,21 @@ export default function HomePage() {
             <header className="kh-home-header">
 
                 <h1 className="kh-home-logo">
-                    Khana Khazana
+                    {APP_NAME}
                 </h1>
 
                 <img
                     className="kh-home-avatar"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmCD_ipAkdv8HKf-8F6aPCxkbc48anMUoTEIuCMo2bQVP4grzNLj6tJ6PzFp7m4JxpNW66CZatxEcsVi9ijg8TO1IKmTWr9F7Z9yxO1QTuU-nAHF7MH-eB2Youk1pPkgVqco3fVO9oR6thv9iJu4I8lLz-ZP0WtW-i76dE-4uUy1tEOvUKTakRo6-E1Kfrso4EawnaAT_P7kMSROYW6Z5D-22E1DkgPRAVSjGtkeyywTG8cabiAwTYPqduh5fX2zTHa0Nap0CI6-M"
                     alt="profile"
-                    onClick={() => navigate(user ? "/profile" : "/login")}
+                    onClick={() => {
+                        if (!user) {
+                            navigate("/login");
+                            return;
+                        }
+
+                        setShowProfileMenu(prev => !prev);
+                    }}
                 />
 
             </header>
@@ -260,14 +271,37 @@ export default function HomePage() {
             </section>
 
 
-            <button className="kh-home-add">
+            <button
+                className="kh-home-add"
+                disabled={creatingRecipe}
+                onClick={async () => {
 
+                    if (creatingRecipe) return;
+
+                    if (!user) {
+                        navigate("/login");
+                        return;
+                    }
+
+                    setCreatingRecipe(true);
+
+                    const newId = await addRecipe("New Recipe");
+
+                    if (newId) {
+                        navigate(`/recipes/${newId}?edit=true`);
+                    }
+
+                    setCreatingRecipe(false);
+                }}
+            >
                 <span className="material-icons-round">
-                    add
+                    {creatingRecipe ? "hourglass_top" : "add"}
                 </span>
-
             </button>
-
+            <ProfileDropdown
+                open={showProfileMenu}
+                onClose={() => setShowProfileMenu(false)}
+            />
         </div>
     );
 }

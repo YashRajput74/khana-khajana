@@ -131,6 +131,7 @@ export function RecipesProvider({ children }) {
                         lastCookedAt: r.last_cooked_at,
                         isFavorite: r.is_favorite,
                         isSafeRepeat: r.is_safe_repeat,
+                        ingredients: r.ingredients || [],
                         steps: r.steps || []
                     };
                 });
@@ -331,6 +332,7 @@ export function RecipesProvider({ children }) {
             if (updates.steps !== undefined) mappedUpdates.steps = updates.steps;
             if (updates.title !== undefined) mappedUpdates.title = updates.title;
             if (updates.isSafeRepeat !== undefined) mappedUpdates.is_safe_repeat = updates.isSafeRepeat;
+            if (updates.ingredients !== undefined) mappedUpdates.ingredients = updates.ingredients;
             const res = await fetchWithAuth(
                 `${import.meta.env.VITE_API_URL}/api/recipes/${id}`,
                 {

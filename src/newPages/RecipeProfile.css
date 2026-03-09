@@ -141,7 +141,7 @@
 }
 
 .recipe-page-step-num {
-    width: 60px;
+    width: 32px;
     height: 32px;
     background: #E5C875;
     color: #1f2937;
@@ -163,4 +163,13 @@
     padding: 18px;
     border-radius: 14px;
     margin-bottom: 12px;
+}
+
+.recipe-page-steper{
+    line-height: 20px;
+}
+.recipe-page-flexing{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -45,7 +45,7 @@ function AppRoutes() {
             <Route
                 path="/onboarding"
                 element={
-                    user || diet
+                    user
                         ? <Navigate to="/" replace />
                         : (
                             <Onboarding

@@ -12,21 +12,22 @@ export default function RecipeProfile() {
     const {
         recipes,
         toggleFavorite,
-        markAsCooked, updateRecipe
+        markAsCooked,
+        updateRecipe,
+        deleteRecipe
     } = useRecipes();
 
-    const recipe = recipes[id];
-
     const [form, setForm] = useState({
-        title: recipe?.title || "",
-        description: recipe?.description || "",
-        category: recipe?.category || "",
-        cookingTime: recipe?.cookingTime || "",
-        tags: recipe?.tags || [],
-        steps: recipe?.steps || [],
-        ingredients: recipe?.ingredients || []
+        title: "",
+        description: "",
+        category: "",
+        cookingTime: "",
+        tags: [],
+        steps: [],
+        ingredients: []
     });
-
+    const recipe = recipes[id];
+    const isNewRecipe = isEditing && recipe?.title === "New Recipe";
     useEffect(() => {
         if (recipe) {
             setForm({
@@ -40,17 +41,19 @@ export default function RecipeProfile() {
             });
         }
     }, [recipe]);
-
     if (!recipe) {
         return (
             <div className="recipe-page">
-                <p>Recipe not found</p>
+                <p>Loading recipe...</p>
             </div>
         );
     }
 
-    const ingredients = recipe.ingredients || [];
+    // const ingredients = recipe.ingredients || [];
     const steps = recipe.steps || [];
+    console.log("recipe data:", recipe);
+
+
     const handleSave = async () => {
 
         await updateRecipe(id, {
@@ -78,10 +81,7 @@ export default function RecipeProfile() {
     const addStep = () => {
         setForm(prev => ({
             ...prev,
-            steps: [
-                ...prev.steps,
-                { title: "", text: "" }
-            ]
+            steps: [...prev.steps, ""]
         }));
     };
     return (
@@ -93,7 +93,16 @@ export default function RecipeProfile() {
 
                     <button
                         className="recipe-page-back"
-                        onClick={() => navigate(-1)}
+                        onClick={async () => {
+
+                            if (isNewRecipe) {
+                                await deleteRecipe(id);
+                                navigate("/");
+                                return;
+                            }
+
+                            navigate(-1);
+                        }}
                     >
                         <span className="material-symbols-outlined">
                             arrow_back
@@ -143,7 +152,7 @@ export default function RecipeProfile() {
 
                         <div className="recipe-page-badges">
 
-                            {recipe.isFavorite && (
+                            {recipe.isSafeRepeat && (
                                 <span className="recipe-page-repeat">
                                     Repeat-Safe
                                 </span>
@@ -184,7 +193,16 @@ export default function RecipeProfile() {
 
                                     <button
                                         className="recipe-page-cancel"
-                                        onClick={() => navigate(`/recipes/${id}`)}
+                                        onClick={async () => {
+
+                                            if (isNewRecipe) {
+                                                await deleteRecipe(id);
+                                                navigate("/");
+                                                return;
+                                            }
+
+                                            navigate(`/recipes/${id}`);
+                                        }}
                                     >
                                         Cancel
                                     </button>
@@ -216,7 +234,7 @@ export default function RecipeProfile() {
                 <div className="recipe-page-grid">
                     <div className="recipe-page-left">
 
-                        <section>
+                        {/* <section>
 
                             <h3>Quick Stats</h3>
 
@@ -239,8 +257,8 @@ export default function RecipeProfile() {
 
                             </div>
 
-                        </section>
-                        <section className="recipe-page-ingredients">
+                        </section> */}
+                        {/* <section className="recipe-page-ingredients">
 
                             <div className="recipe-page-ing-header">
                                 <h3>Ingredients</h3>
@@ -300,7 +318,7 @@ export default function RecipeProfile() {
                                 </button>
                             )}
 
-                        </section>
+                        </section> */}
 
                     </div>
                     <div className="recipe-page-right">
@@ -322,37 +340,21 @@ export default function RecipeProfile() {
                                         {index + 1}
                                     </div>
 
-                                    <div>
+                                    <div className="recipe-page-flexing">
 
                                         {isEditing ? (
                                             <input
-                                                value={s.title || ""}
-                                                placeholder="Step title"
+                                                value={s || ""}
                                                 onChange={(e) => {
                                                     const updated = [...form.steps];
-                                                    updated[index].title = e.target.value;
-
-                                                    setForm(prev => ({
-                                                        ...prev,
-                                                        steps: updated
-                                                    }));
-                                                }}
-                                            />
-                                        ) : (
-                                            <h4>{s.title}</h4>
-                                        )}
-
-                                        {isEditing ? (
-                                            <textarea
-                                                value={s.text}
-                                                onChange={(e) => {
-                                                    const updated = [...form.steps];
-                                                    updated[index].text = e.target.value;
+                                                    updated[index] = e.target.value;
                                                     setForm(prev => ({ ...prev, steps: updated }));
                                                 }}
                                             />
                                         ) : (
-                                            <p>{s.text}</p>
+                                            <>
+                                                <h4 className="recipe-page-steper">{s}</h4>
+                                            </>
                                         )}
                                     </div>
 
@@ -367,7 +369,7 @@ export default function RecipeProfile() {
 
                         </section>
 
-                        <section className="recipe-page-journal">
+                        {/* <section className="recipe-page-journal">
 
                             <h3>Cook's Journal</h3>
 
@@ -389,7 +391,7 @@ export default function RecipeProfile() {
                                 </div>
 
                             ))}
-                        </section>
+                        </section> */}
 
                     </div>
 
