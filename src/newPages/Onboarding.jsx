@@ -6,14 +6,14 @@ export default function Onboarding({ onLogin, onContinue }) {
 
     const [selectedDiet, setSelectedDiet] = useState(null);
 
-    const handleContinue = () => {
+   /*  const handleContinue = () => {
         if (!selectedDiet) {
             alert("Please select your preference");
             return;
         }
 
         onContinue(selectedDiet);
-    };
+    }; */
 
     return (
         <div className="onboarding">
@@ -68,7 +68,10 @@ export default function Onboarding({ onLogin, onContinue }) {
 
                         <div
                             className={`onb-card ${selectedDiet === "veg" ? "veg-active" : ""}`}
-                            onClick={() => setSelectedDiet("veg")}
+                            onClick={() => {
+                                setSelectedDiet("veg")
+                                onContinue("veg")
+                            }}
                         >
 
                             <div className="icon veg-icon">
@@ -98,7 +101,10 @@ export default function Onboarding({ onLogin, onContinue }) {
 
                         <div
                             className={`onb-card ${selectedDiet === "nonveg" ? "nonveg-active" : ""}`}
-                            onClick={() => setSelectedDiet("nonveg")}
+                            onClick={() => {
+                                setSelectedDiet("nonveg")
+                                onContinue("nonveg")
+                            }}
                         >
 
                             <div className="icon nonveg-icon">
@@ -126,7 +132,7 @@ export default function Onboarding({ onLogin, onContinue }) {
                     </div>
 
 
-                    <button
+                    {/* <button
                         className="onb-continue"
                         onClick={handleContinue}
                     >
@@ -137,7 +143,7 @@ export default function Onboarding({ onLogin, onContinue }) {
                             arrow_forward
                         </span>
 
-                    </button>
+                    </button> */}
 
                 </section>
 
