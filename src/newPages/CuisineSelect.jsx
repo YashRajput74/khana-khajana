@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./CuisineSelect.css";
+import { APP_NAME } from "../config/appconfig";
 
 export default function CuisineSelect({ onNext, onSkip }) {
 
@@ -42,7 +43,7 @@ export default function CuisineSelect({ onNext, onSkip }) {
             <header className="kk-root-header">
 
                 <div className="kk-root-logo">
-                    Khana Khazana
+                    {APP_NAME}
                 </div>
 
                 <button

@@ -66,6 +66,10 @@
     font-size: 40px;
 }
 
+.recipe-page-repeat{
+    padding-right: 10px;
+}
+
 .recipe-page-desc {
     color: #9ca3af;
     margin: 10px 0 25px;

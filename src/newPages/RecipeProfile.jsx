@@ -14,7 +14,8 @@ export default function RecipeProfile() {
         toggleFavorite,
         markAsCooked,
         updateRecipe,
-        deleteRecipe
+        deleteRecipe,
+        toggleSafeRepeat
     } = useRecipes();
 
     const [form, setForm] = useState({
@@ -145,6 +146,12 @@ export default function RecipeProfile() {
                     >
                         <span className="material-symbols-outlined">
                             {recipe.isFavorite ? "favorite" : "favorite_border"}
+                        </span>
+                    </button>
+
+                    <button onClick={() => toggleSafeRepeat(id)}>
+                        <span className="material-symbols-outlined">
+                            {recipe.isSafeRepeat ? "verified" : "verified_off"}
                         </span>
                     </button>
 

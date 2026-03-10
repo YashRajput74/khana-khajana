@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./TasteProfile.css";
+import { APP_NAME } from "../config/appconfig";
 
 export default function TasteProfile({ onFinish, onSkip }) {
 
@@ -42,7 +43,7 @@ export default function TasteProfile({ onFinish, onSkip }) {
             <header className="kk-taste-header">
 
                 <div className="kk-taste-logo">
-                    Khana Khazana
+                    {APP_NAME}
                 </div>
             </header>
 

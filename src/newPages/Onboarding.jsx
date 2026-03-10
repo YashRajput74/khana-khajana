@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Onboarding.css";
+import { APP_NAME } from "../config/appconfig";
 
 export default function Onboarding({ onLogin, onContinue }) {
 
@@ -25,7 +26,7 @@ export default function Onboarding({ onLogin, onContinue }) {
                     </span>
 
                     <span className="logo-text">
-                        Khana Khazana
+                        {APP_NAME}
                     </span>
                 </div>
             </header>
@@ -143,7 +144,7 @@ export default function Onboarding({ onLogin, onContinue }) {
             </main>
 
             <footer className="onb-footer">
-                © Khana Khazana AI Assistant
+                © {APP_NAME} AI Assistant
             </footer>
 
         </div>

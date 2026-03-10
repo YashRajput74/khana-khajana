@@ -428,7 +428,8 @@ export function RecipesProvider({ children }) {
         setCuisinePreferences,
         setTastePreferences,
         fetchSuggestions,
-        setSuggestions
+        setSuggestions,
+        toggleSafeRepeat
     }), [
         authLoaded,
         recipes,

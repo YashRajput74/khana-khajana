@@ -2,6 +2,7 @@ import "./WelcomeBack.css";
 import { useState } from "react";
 import { useRecipes } from "../context/RecipesContext";
 import { useNavigate } from "react-router-dom";
+import { APP_NAME } from "../config/appconfig";
 
 export default function WelcomeBack() {
 
@@ -43,7 +44,7 @@ export default function WelcomeBack() {
                     </span>
 
                     <span className="kk-auth-logo-text">
-                        Khana Khazana
+                        {APP_NAME}
                     </span>
 
                 </div>
@@ -174,7 +175,7 @@ export default function WelcomeBack() {
             {/* Footer */}
 
             <footer className="kk-auth-footer">
-                © Khana Khazana AI Assistant
+                © {APP_NAME} AI Assistant
             </footer>
 
         </div>
