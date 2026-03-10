@@ -85,7 +85,6 @@ export default function RecipeProfile() {
             category: form.category,
             cookingTime: form.cookingTime,
             steps: form.steps,
-            ingredients: form.ingredients,
             tags: form.tags
         });
 

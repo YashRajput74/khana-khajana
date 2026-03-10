@@ -337,7 +337,10 @@ export function RecipesProvider({ children }) {
             if (updates.image !== undefined) mappedUpdates.image = updates.image;
             if (updates.category !== undefined) mappedUpdates.category = updates.category;
             if (updates.tags !== undefined) mappedUpdates.tags = updates.tags;
-            if (updates.cookingTime !== undefined) mappedUpdates.cooking_time = updates.cookingTime;
+            if (updates.cookingTime !== undefined) {
+                mappedUpdates.cooking_time =
+                    updates.cookingTime === "" ? null : Number(updates.cookingTime);
+            }
             if (updates.lastCookedAt !== undefined) mappedUpdates.last_cooked_at = updates.lastCookedAt;
             if (updates.isFavorite !== undefined) mappedUpdates.is_favorite = updates.isFavorite;
             if (updates.steps !== undefined) mappedUpdates.steps = updates.steps;
@@ -374,7 +377,10 @@ export function RecipesProvider({ children }) {
 
             setRecipes(prev => ({
                 ...prev,
-                [id]: formatted
+                [id]: {
+                    ...prev[id],
+                    ...formatted
+                }
             }));
 
         } catch (err) {
