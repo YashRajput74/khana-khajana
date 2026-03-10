@@ -3,7 +3,7 @@ import { useRecipes } from "../context/RecipesContext";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { APP_NAME } from "../config/appconfig";
-import ProfileDropdown from "../components/ProfileDropDown";
+import ProfileDropdown from "../components/ProfileDropdown";
 
 const dishes = [
     {
