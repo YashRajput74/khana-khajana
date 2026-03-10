@@ -145,7 +145,7 @@ export default function RecipeProfile() {
                         onClick={() => toggleFavorite(id)}
                     >
                         <span className="material-symbols-outlined">
-                            {recipe.isFavorite ? "favorite" : "favorite_border"}
+                            {recipe.isFavorite ? "favorite" : "heart_minus"}
                         </span>
                     </button>
 
@@ -187,7 +187,11 @@ export default function RecipeProfile() {
                                     Repeat-Safe
                                 </span>
                             )}
-
+                            {recipe.isFavorite && (
+                                <span className="recipe-page-repeat">
+                                    Favorite
+                                </span>
+                            )}
                             {recipe.lastCookedAt && (
                                 <span className="recipe-page-history">
                                     Last cooked{" "}

@@ -67,6 +67,7 @@ export default function HomePage() {
     const [activeTab, setActiveTab] = useState("ai");
     const [creatingRecipe, setCreatingRecipe] = useState(false);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const [addedDishes, setAddedDishes] = useState({});
     const handleSuggest = async (query) => {
         const finalQuery = query || aiQuery;
         if (!finalQuery.trim()) return;
@@ -150,6 +151,10 @@ export default function HomePage() {
         visibleDishes = forgotten;
     }
 
+    if (activeTab === "kitchen") {
+        visibleDishes = recipesArray;
+    }
+
     return (
 
         <div className="kh-home">
@@ -225,6 +230,13 @@ export default function HomePage() {
                 </span>
 
                 <span
+                    className={activeTab === "kitchen" ? "active" : ""}
+                    onClick={() => setActiveTab("kitchen")}
+                >
+                    My Kitchen
+                </span>
+
+                <span
                     className={activeTab === "safe" ? "active" : ""}
                     onClick={() => setActiveTab("safe")}
                 >
@@ -253,8 +265,41 @@ export default function HomePage() {
 
                     visibleDishes.map((dish, i) => (
 
-                        <div key={dish.id || i} className="kh-home-card" onClick={() => navigate(`/recipes/${dish.id}`)}>
+                        <div
+                            key={dish.id || i}
+                            className="kh-home-card"
+                            onClick={() => {
+                                if (!dish.aiGenerated) {
+                                    navigate(`/recipes/${dish.id}`)
+                                }
+                            }}
+                        >
+                            {dish.aiGenerated && (
+                                <button
+                                    className="kh-home-add-ai"
+                                    title={addedDishes[dish.title] ? "Added to My Kitchen" : "Add to My Kitchen"}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
 
+                                        if (addedDishes[dish.title]) return;
+
+                                        addRecipe({
+                                            title: dish.title,
+                                            tags: dish.tags || [],
+                                            image: dish.image || null
+                                        });
+
+                                        setAddedDishes(prev => ({
+                                            ...prev,
+                                            [dish.title]: true
+                                        }));
+                                    }}
+                                >
+                                    <span className="material-icons-round">
+                                        {addedDishes[dish.title] ? "check" : "add"}
+                                    </span>
+                                </button>
+                            )}
                             <img src={dish.image || "/dummy_image.png"} alt={dish.title} />
 
                             <div className="kh-home-overlay">

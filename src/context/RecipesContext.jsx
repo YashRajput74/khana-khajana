@@ -62,13 +62,27 @@ export function RecipesProvider({ children }) {
         // AI suggestions
         if (data.type === "suggestions") {
 
-            const ids = data.suggestions.map(s => s.id);
+            const existing = [];
+            const aiNew = [];
 
-            const matchedRecipes = recipesArray.filter(r =>
-                ids.includes(r.id)
-            );
+            data.suggestions.forEach(s => {
+                if (s.type === "existing") {
+                    const match = recipesArray.find(r => r.id === s.id);
+                    if (match) existing.push(match);
+                }
 
-            setSuggestions(matchedRecipes);
+                if (s.type === "new") {
+                    aiNew.push({
+                        id: `ai-${Math.random()}`,
+                        title: s.title,
+                        image: "/dummy_image.png",
+                        tags: s.tags || [],
+                        aiGenerated: true
+                    });
+                }
+            });
+
+            setSuggestions([...existing, ...aiNew]);
         }
 
         // AI requested recipe creation
@@ -225,14 +239,14 @@ export function RecipesProvider({ children }) {
         });
     };
 
-    const addRecipe = async (title) => {
+    const addRecipe = async (recipeData) => {
         try {
             const res = await fetchWithAuth(
                 `${import.meta.env.VITE_API_URL}/api/recipes`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ title })
+                    body: JSON.stringify(recipeData)
                 }
             );
 
